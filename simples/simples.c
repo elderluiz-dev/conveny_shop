@@ -25,26 +25,26 @@ p_perecivel* criar_p_perecivel(p_perecivel novo){
     return novo_produto;
 }
 
-lista_pereciveis* adicionar_perecivel(p_perecivel novo, lista_pereciveis *lista){
+void adicionar_perecivel(p_perecivel novo, lista_pereciveis* *lista){
     p_perecivel* produto = criar_p_perecivel(novo);
     
-    if(lista->tamanho == 0){
-        lista->cabeca = produto;
-        lista->tamanho = 1;
+    if((*lista)->tamanho == 0){
+        (*lista)->cabeca = produto;
+        (*lista)->tamanho = 1;
 
-        return lista;
+        return;
     }
 
-    p_perecivel* atual = lista->cabeca;
+    p_perecivel* atual = (*lista)->cabeca;
     while(atual->prox != NULL)
     {
         atual = atual->prox;
     }
 
     atual->prox = produto;
-    lista->tamanho++;
+    (*lista)->tamanho++;
 
-    return lista;
+    return;
 }
 
 void exibir_pereciveis(p_perecivel* atual){
@@ -52,8 +52,8 @@ void exibir_pereciveis(p_perecivel* atual){
         return;
     }
 
-    printf("\nID: %d\n", atual->id);
-    printf("Nome: %s\n", atual->nome);
+    printf("\nNome: %s\n", atual->nome);
+    printf("ID: %d\n", atual->id);
     printf("Preço: %.2f\n", atual->preco);
     printf("Quantidade: %d\n", atual->quantidade);
     printf("Validade: %s\n", atual->validade);
@@ -61,8 +61,8 @@ void exibir_pereciveis(p_perecivel* atual){
     exibir_pereciveis(atual->prox);
 }
 
-lista_pereciveis* remover_perecivel(lista_pereciveis* lista, int id){
-    p_perecivel* atual = lista->cabeca;
+void remover_perecivel(lista_pereciveis* *lista, int id){
+    p_perecivel* atual = (*lista)->cabeca;
     p_perecivel* anterior = NULL;
 
     while(atual != NULL && atual->id != id)
@@ -75,44 +75,44 @@ lista_pereciveis* remover_perecivel(lista_pereciveis* lista, int id){
     if(atual == NULL)
     {
         printf("Produto não encontrado!\n");
-        return lista;
+        return;
     }
 
     if(anterior == NULL){
-        lista->cabeca = atual->prox;
+        (*lista)->cabeca = atual->prox;
     }else{
         anterior->prox = atual->prox;
     }
 
     free(atual);
-    lista->tamanho--;
+    (*lista)->tamanho--;
     printf("Produto removido com sucesso!\n");
 
-    return lista;
+    return;
 }
 
-lista_pereciveis* esvaziar_pereciveis(lista_pereciveis* lista){
-    p_perecivel* atual = lista->cabeca;
+void esvaziar_pereciveis(lista_pereciveis* *lista){
+    p_perecivel* atual = (*lista)->cabeca;
     while(atual != NULL)
     {
         free(atual);
         atual = atual->prox;
     }
 
-    lista->cabeca = NULL;
-    lista->tamanho = 0;
+    (*lista)->cabeca = NULL;
+    (*lista)->tamanho = 0;
 
     printf("Lista esvaziada!\n");
-    return lista;
+    return;
 }
 
-lista_pereciveis* editar_qtd_perecivel(lista_pereciveis* lista, int id){
-    p_perecivel* atual = lista->cabeca;
+void editar_qtd_perecivel(lista_pereciveis* *lista, int id){
+    p_perecivel* atual = (*lista)->cabeca;
     p_perecivel* anterior = NULL; 
 
     if(atual == NULL){
         printf("Lista vazia.");
-        return lista;
+        return;
     }
 
     while(atual != NULL && atual->id != id)
@@ -124,7 +124,7 @@ lista_pereciveis* editar_qtd_perecivel(lista_pereciveis* lista, int id){
     if(atual == NULL)
     {
         printf("Produto não encontrado!\n");
-        return lista;
+        return;
     }
 
     printf("\n-- EDITAR PRODUTO %d\n", id);
@@ -133,7 +133,7 @@ lista_pereciveis* editar_qtd_perecivel(lista_pereciveis* lista, int id){
     scanf("%d", &atual->quantidade);
 
     printf("\nProduto editado com sucesso!\n");
-    return lista;
+    return;
 }
 
 void buscar_perecivel(lista_pereciveis* lista, char *substr){
