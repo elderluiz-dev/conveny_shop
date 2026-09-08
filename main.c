@@ -7,6 +7,7 @@
 
 int main(){
     lista_pereciveis* lista_pere = criar_lista_pereciveis();
+    int id = 1;
 
     while(1)
     {
@@ -18,7 +19,6 @@ int main(){
         {
         case 1:
             limpa_terminal();
-            int id = 1;
             while(option != 0)
             {
                 option = menu_pereciveis();
@@ -38,16 +38,28 @@ int main(){
                     scanf("%d", &novo.quantidade);
                     getchar();
 
+                    if(novo.quantidade <= 0)
+                    {
+                        printf("Quantidade inválida. Operação cancelada.");
+                        break;
+                    }
+
                     printf("Preço: ");
                     scanf("%f", &novo.preco);
                     getchar();
+
+                    if(novo.preco <= 0)
+                    {
+                        printf("Valor inválido. Operação cancelada.");
+                        break;
+                    }
 
                     printf("Validade: ");
                     fgets(novo.validade, sizeof(novo.validade), stdin);
                     novo.validade[strcspn(novo.validade, "\n")] = '\0';
 
                     novo.prox = NULL;
-                    lista_pere = adicionar_perecivel(novo, lista_pere);
+                    adicionar_perecivel(novo, &lista_pere);
 
                     id++;
                     limpa_terminal();
@@ -60,7 +72,7 @@ int main(){
                     printf("Digite o ID do produto que quer remvoer: ");
                     scanf("%d", &rem_id);
                     getchar();
-                    remover_perecivel(lista_pere, rem_id);
+                    remover_perecivel(&lista_pere, rem_id);
                     break;
 
                 case 3:
@@ -89,7 +101,7 @@ int main(){
                         break;
                     }
 
-                    printf("\n== PRODUTOS PERECIVEIS ==\n");
+                    printf("\n== LISTA DE PRODUTOS PERECIVEIS CADASTRADOS ==\n");
                     exibir_pereciveis(lista_pere->cabeca);
 
                     break;
@@ -102,7 +114,7 @@ int main(){
                     scanf("%d", &id);
                     getchar();
 
-                    lista_pere = editar_qtd_perecivel(lista_pere, id);
+                    editar_qtd_perecivel(&lista_pere, id);
                     break;
 
                 case 6:
@@ -121,7 +133,7 @@ int main(){
                     verify[strcspn(verify, "\n")] = '\0';
 
                     if(strcmp(verify, "CONFIRMO") == 0 || strcmp(verify, "confirmo") == 0){
-                        lista_pere = esvaziar_pereciveis(lista_pere);
+                        esvaziar_pereciveis(&lista_pere);
                     }else{
                         printf("Operação cancelada pelo usuário.");
                     }
