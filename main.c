@@ -2,11 +2,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "dupla/dupla.h"
 #include "simples/simples.h"
 #include "interface/interface.h"
+#include "produto.h"
 
 int main(){
     lista_pereciveis* lista_pere = criar_lista_pereciveis();
+    lista_nao_pereciveis* list_nao_pereci = NULL;
+    int id_nao_perecivel = 1;
     int id = 1;
 
     while(1)
@@ -157,12 +161,72 @@ int main(){
             limpa_terminal();
             while(option != 0)
             {
+                ERROR_TYPE_T tratamento;
                 option = menu_n_pereciveis();
                 switch(option)
                 {
                 case 1:
+                    p_nao_perecivel nov_item = {};
+                    if(list_nao_pereci == NULL)
+                    {
+                        iniciar_lista_nperecivel(&list_nao_pereci);
+                        if(list_nao_pereci == NULL)
+                        {
+                            break;
+                        }
+                    }
+
                     limpa_terminal();
-                    printf("Algo\n");
+
+                    nov_item.id = id_nao_perecivel;
+                    printf("\nPreencha as informações abaixo: \n");
+                    printf("Nome do item: ");
+
+                    fgets(nov_item.nome, sizeof(nov_item.nome), stdin);
+                    nov_item.nome[strcspn(nov_item.nome, "\n")] = '\0';
+                    
+                    printf("Quantidade: ");
+                    scanf("%d", &nov_item.quantidade);
+                    while(nov_item.quantidade <= 0)
+                    {
+                        printf("Preco invalido!\n");
+                        printf("Digite novamente: ");
+                        scanf("%d", &nov_item.quantidade);
+                    }
+                    
+                    printf("Preco: ");
+                    scanf("%f", &nov_item.preco);
+                    while(nov_item.preco <= 0)
+                    {
+                        printf("Preco invalido!\n");
+                        printf("Digite novamente: ");
+                        scanf("%f", &nov_item.preco);
+                    }    
+
+                    printf("Validade: ");
+
+                    while (getchar() != '\n' && getchar() != EOF);
+                    fgets(nov_item.validade, sizeof(nov_item.validade), stdin);
+                    nov_item.validade[strcspn(nov_item.validade, "\n")] = '\0';
+
+                    tratamento = inserir(nov_item, &list_nao_pereci->cabeca);
+                        
+                    if(tratamento == ALLOCATION_ERROR) break;
+
+                    printf("\nProduto adicionado com sucesso\n");
+                    id_nao_perecivel++;
+                    list_nao_pereci->tamanho++;
+                    
+                    break;
+                
+                case 2:
+                    limpa_terminal();
+
+                    break;
+
+                case 4:
+                    limpa_terminal();
+                    exibir(list_nao_pereci->cabeca);
                     break;
 
                 case 0:
