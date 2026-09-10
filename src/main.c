@@ -2,14 +2,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "dupla/dupla.h"
-#include "simples/simples.h"
-#include "interface/interface.h"
+#include "simples.h"
+#include "dupla.h"
+#include "circular.h"
+
+#include "interface.h"
 #include "produto.h"
 
 int main(){
-    lista_pereciveis* lista_pere = criar_lista_pereciveis();
-    lista_nao_pereciveis* list_nao_pereci = NULL;
+    lista_pereciveis *lista_pere = criar_lista_pereciveis();
+    lista_nao_pereciveis *list_nao_pereci = NULL;
     int id_nao_perecivel = 1;
     int id = 1;
 
@@ -221,7 +223,6 @@ int main(){
                 
                 case 2:
                     limpa_terminal();
-
                     break;
 
                 case 4:

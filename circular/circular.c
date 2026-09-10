@@ -242,7 +242,7 @@ void exibe_lista(p_promo **cauda)
         printf("Preço: R$ %.2f\n", atual->preco); 
         printf("Validade: %s\n", atual->validade);
         printf("------------------------\n");
-        
+
         atual = atual->prox;
     } while(atual != (*cauda)->prox);
 }
