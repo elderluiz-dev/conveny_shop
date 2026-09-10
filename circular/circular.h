@@ -19,12 +19,16 @@ typedef struct lista_promo
 void insere_cabeca(p_promo **cauda, p_promo novo_produto, lista_promo *lista);
 void insere_cauda(p_promo **cauda, p_promo novo_produto, lista_promo *lista);
 
-void remove_inicio();
-void remove_fim();
-void remove_id();
+void remove_cabeca(p_promo **cauda);
+void remove_cauda(p_promo **cauda, lista_promo *lista);
+void remove_id(p_promo **cauda, int id, lista_promo *lista);
 
-p_promo busca_nome();
+void busca_nome(p_promo *cauda, char *nome);
 
-void atualiza_quantidade();
+void atualiza_quantidade(p_promo **cauda, int id, int nova_quantidade);
+
+void exibe_lista(p_promo *cauda);
+
+int contar_lista(p_promo *cauda);
 
 void limpa_lista();
