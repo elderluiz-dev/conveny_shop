@@ -205,7 +205,7 @@ void atualiza_quantidade(p_promo **cauda, int id, int nova_quantidade)
     }
 }
 
-int contar_lista(p_promo *cauda)
+int conta_lista(p_promo *cauda)
 {
     if(cauda == NULL)
     {
@@ -224,6 +224,57 @@ int contar_lista(p_promo *cauda)
     return qty_produtos;
 }
 
+void exibe_lista(p_promo **cauda)
+{
+    if(*cauda == NULL)
+    {
+        printf("Não foi possível exibir a lista, pois está vazia.\n");
+        return;
+    }
+
+    p_promo *atual = (*cauda)->prox;
+
+    do
+    {
+        printf("ID: %d\n", atual->id);
+        printf("Nome: %s\n", atual->nome);
+        printf("Quantidade: %d\n", atual->quantidade);
+        printf("Preço: R$ %.2f\n", atual->preco); 
+        printf("Validade: %s\n", atual->validade);
+        printf("------------------------\n");
+        
+        atual = atual->prox;
+    } while(atual != (*cauda)->prox);
+}
+
+void limpa_lista(p_promo **cauda, lista_promo *lista)
+{
+    if(*cauda == NULL)
+    {
+        printf("A lista já se encontra vazia.\n");
+        return;
+    }
+
+    p_promo *atual = (*cauda)->prox; 
+    p_promo *proximo;
+
+    (*cauda)->prox = NULL;
+
+    while(atual != NULL)
+    {
+        proximo = atual->prox;
+        free(atual);
+        atual = proximo;
+    }
+
+    *cauda = NULL;
+    
+    if(lista != NULL)
+    {
+        lista->cauda = NULL;
+    }
+}
+
 int main()
 {
     p_promo *cauda = NULL;
@@ -235,27 +286,35 @@ int main()
     p_promo p1 = {1, "Arroz", 2, 6, "14/12", NULL};
     p_promo p2 = {2, "Feijao", 8, 2.50, "01/09", NULL};
 
-    printf("Quantidade de produtos na lista: %d\n", contar_lista(cauda));
+    printf("Quantidade de produtos na lista: %d\n", conta_lista(cauda));
 
     insere_cabeca(&cauda, p1, &lista);
-    insere_cauda(&cauda, p2, &lista);
-    insere_cauda(&cauda, p2, &lista);
 
-    printf("Quantidade de produtos na lista: %d\n", contar_lista(cauda));
+    printf("Quantidade de produtos na lista: %d\n", conta_lista(cauda));
     
     insere_cauda(&cauda, p2, &lista);
-    insere_cauda(&cauda, p2, &lista);
-    insere_cabeca(&cauda, p1, &lista);
 
-    printf("Quantidade de produtos na lista: %d\n", contar_lista(cauda));
+    printf("Quantidade de produtos na lista: %d\n", conta_lista(cauda));
 
     //remove_id(&cauda, 1, &lista);
 
     atualiza_quantidade(&cauda, 1, 23);
     atualiza_quantidade(&cauda, 2, 12);
 
-    busca_nome(cauda, "Arr");
-    busca_nome(cauda, "Fei");
+    //exibe_lista(cauda);
+
+    //busca_nome(cauda, "Arr");
+    //busca_nome(cauda, "Fei");
+
+    limpa_lista(&cauda, &lista);
+
+    exibe_lista(&cauda);
+
+    insere_cabeca(&cauda, p1, &lista);
+    insere_cabeca(&cauda, p1, &lista);
+    insere_cauda(&cauda, p2, &lista);
+
+    exibe_lista(&cauda);
 
     return 0;
 }
