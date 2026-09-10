@@ -1,5 +1,7 @@
 #pragma once
-#include "../produto.h"
+
+#include "produto.h"
+
 typedef struct nao_perecivel
 {
     int id;

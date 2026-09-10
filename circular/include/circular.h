@@ -24,11 +24,7 @@ void remove_cauda(p_promo **cauda, lista_promo *lista);
 void remove_id(p_promo **cauda, int id, lista_promo *lista);
 
 void busca_nome(p_promo *cauda, char *nome);
-
 void atualiza_quantidade(p_promo **cauda, int id, int nova_quantidade);
-
 void exibe_lista(p_promo **cauda);
-
 int conta_lista(p_promo *cauda);
-
 void limpa_lista(p_promo **cauda, lista_promo *lista);

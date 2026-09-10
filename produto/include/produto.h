@@ -4,5 +4,5 @@ typedef enum
 {
     SUCCESS,
     ALLOCATION_ERROR,
-    ID_NOTFOUND
+    ID_NOTFOUND,
 } ERROR_TYPE_T;
