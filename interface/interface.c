@@ -80,6 +80,7 @@ int submenu_adiciona_produto_circular()
 {
     int x;
 
+    printf("\n===== PRODUTOS EM PROMOÇÃO =====\n");
     printf("1. Adicionar produto no início\n");
     printf("2. Adicionar produto no fim\n");
     printf("0. Voltar\n");
@@ -94,6 +95,7 @@ int submenu_remove_produto_circular()
 {
     int x;
 
+    printf("\n===== PRODUTOS EM PROMOÇÃO =====\n");
     printf("1. Remover produto no início\n");
     printf("2. Remover produto no fim\n");
     printf("3. Remover produto por ID\n");
