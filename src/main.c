@@ -251,7 +251,7 @@ int main(){
                 {
                 case 1:
                     limpa_terminal();
-                    printf("Algo\n");
+                    
                     break;
 
                 case 0:

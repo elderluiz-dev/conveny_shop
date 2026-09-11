@@ -12,8 +12,8 @@ int menu_principal(){
     printf("3. Gerenciar Promoções (Circular)\n");
     printf("0. Sair\n");
     printf("> ");
-    scanf("%d", &x);
-    getchar();
+
+    scanf("%d%*c", &x);
 
     return x;
 }
@@ -31,8 +31,8 @@ int menu_pereciveis(){
     printf("7. Limpar lista\n");
     printf("0. Voltar\n");
     printf("> ");
-    scanf("%d", &x);
-    getchar();
+    
+    scanf("%d%*c", &x);
 
     return x;
 }
@@ -51,8 +51,8 @@ int menu_n_pereciveis(){
     printf("8. Limpar lista\n");
     printf("0. Voltar\n");
     printf("> ");
-    scanf("%d", &x);
-    getchar();
+    
+    scanf("%d%*c", &x);
 
     return x;
 }
@@ -70,9 +70,34 @@ int menu_promo(){
     printf("7. Limpar lista\n");
     printf("0. Voltar\n");
     printf("> ");
-    scanf("%d", &x);
-    getchar();
 
+    scanf("%d%*c", &x);
+
+    return x;
+}
+
+int submenu_adiciona_produto_circular()
+{
+    int x;
+
+    printf("1. Adicionar produto no início\n");
+    printf("2. Adicionar produto no fim\n");
+
+    scanf("%d%*c", &x);
+
+    return x;
+}
+
+int submenu_remove_produto_circular()
+{
+    int x;
+
+    printf("1. Remover produto no início\n");
+    printf("2. Remover produto no fim\n");
+    printf("3. Remover produto por ID\n");
+
+    scanf("%d%*c", &x);
+    
     return x;
 }
 
