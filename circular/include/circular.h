@@ -16,15 +16,15 @@ typedef struct lista_promo
     int tamanho;
 } lista_promo;
 
-void insere_cabeca(p_promo **cauda, p_promo novo_produto, lista_promo *lista);
-void insere_cauda(p_promo **cauda, p_promo novo_produto, lista_promo *lista);
+void circular_insere_cabeca(p_promo **cauda, p_promo novo_produto, lista_promo *lista);
+void circular_insere_cauda(p_promo **cauda, p_promo novo_produto, lista_promo *lista);
 
-void remove_cabeca(p_promo **cauda);
-void remove_cauda(p_promo **cauda, lista_promo *lista);
-void remove_id(p_promo **cauda, int id, lista_promo *lista);
+void circular_remove_cabeca(p_promo **cauda);
+void circular_remove_cauda(p_promo **cauda, lista_promo *lista);
+void circular_remove_id(p_promo **cauda, int id, lista_promo *lista);
 
-void busca_nome(p_promo *cauda, char *nome);
-void atualiza_quantidade(p_promo **cauda, int id, int nova_quantidade);
-void exibe_lista(p_promo **cauda);
-int conta_lista(p_promo *cauda);
-void limpa_lista(p_promo **cauda, lista_promo *lista);
+void circular_busca_nome(p_promo *cauda, char *nome);
+void circular_atualiza_quantidade(p_promo **cauda, int id, int nova_quantidade);
+void circular_exibe_lista(p_promo **cauda);
+int circular_conta_lista(p_promo *cauda);
+void circular_limpa_lista(p_promo **cauda, lista_promo *lista);
