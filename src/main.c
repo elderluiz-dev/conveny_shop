@@ -164,6 +164,7 @@ int main(){
             while(option != 0)
             {
                 ERROR_TYPE_T tratamento;
+                int id_temp;
                 option = menu_n_pereciveis();
                 switch(option)
                 {
@@ -223,11 +224,125 @@ int main(){
                 
                 case 2:
                     limpa_terminal();
+                    if(list_nao_pereci == NULL)
+                    {
+                        printf("\nNão possui produtos.\n");
+                        break;
+                    }
+                    if(list_nao_pereci->cabeca == NULL)
+                    {
+                        printf("\nNão possui produtos.\n");
+                        break;
+                    }
+
+                    exi_remover(list_nao_pereci->cabeca);
+
+                    printf("\nQual id do item que deseja remover?");
+                    scanf("%d", &id_temp);
+
+                    tratamento = remover(list_nao_pereci, id_temp);
+                    if(tratamento == SUCCESS)
+                    {
+                        printf("\nProduto removido com sucesso.\n");
+                    }
+
+                    break;
+
+                case 3:
+                    limpa_terminal();
+                    char prod_busca[50];
+                    if(list_nao_pereci == NULL)
+                    {
+                        printf("\nNão possui produtos.\n");
+                        break;
+                    }
+                    if(list_nao_pereci->cabeca == NULL)
+                    {
+                        printf("\nNão possui produtos.\n");
+                        break;
+                    }
+                    printf("\nDigite o nome:\n");
+                    fgets(prod_busca, sizeof(prod_busca), stdin);
+                    prod_busca[strcspn(prod_busca, "\n")] = '\0';
+                    buscar(list_nao_pereci->cabeca, prod_busca);
                     break;
 
                 case 4:
                     limpa_terminal();
+
+                    if(list_nao_pereci == NULL)
+                    {
+                        printf("\nA lista está vazia.\n");
+                        break;
+                    }
+                    if(list_nao_pereci->tamanho == 0)
+                    {
+                        printf("\nA lista está vazia.\n");
+                        break;
+                    }
                     exibir(list_nao_pereci->cabeca);
+
+                    break;
+
+                case 5:
+                    limpa_terminal();
+
+                    if(list_nao_pereci == NULL)
+                    {
+                        printf("\nA lista está vazia.\n");
+                        break;
+                    }
+                    if(list_nao_pereci->tamanho == 0)
+                    {
+                        printf("\nA lista está vazia.\n");
+                        break;
+                    }
+                    exi_inverso(list_nao_pereci->cabeca);
+
+                    break;
+
+                case 6:
+                    limpa_terminal();
+
+                    if(list_nao_pereci == NULL)
+                    {
+                        printf("\nA lista está vazia.\n");
+                        break;
+                    }
+                    if(list_nao_pereci->tamanho == 0)
+                    {
+                        printf("\nA lista esta vazia.\n");
+                        break;
+                    }
+
+                    printf("Digite o id do produto que deseja editar: ");
+                    scanf("%d", &id_temp);
+                    
+                    tratamento = atualizar_quant(list_nao_pereci->cabeca, id_temp);
+
+                    if(tratamento == ID_NOTFOUND)
+                    {
+                        printf("\nId não encontrado!\n");
+                        break;
+                    }
+
+                    break;
+
+                case 7:
+                    limpa_terminal();
+                    printf("Quantidade de produtos não perecíveis: %d\n", list_nao_pereci->tamanho);
+
+                    break;
+
+                case 8:
+                    limpa_terminal();
+
+                    if(list_nao_pereci == NULL)
+                    {
+                        printf("\nVocê não possui uma lista!\n");
+                    }
+                    tratamento = limpar_list(&list_nao_pereci);
+
                     break;
 
                 case 0:
