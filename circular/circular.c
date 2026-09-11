@@ -275,7 +275,7 @@ void limpa_lista(p_promo **cauda, lista_promo *lista)
     }
 }
 
-int main()
+/*int main()
 {
     p_promo *cauda = NULL;
 
@@ -317,4 +317,4 @@ int main()
     exibe_lista(&cauda);
 
     return 0;
-}
+}*/
