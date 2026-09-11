@@ -480,7 +480,7 @@ int main(){
                             {
                                 case 1:
                                 {
-                                    circular_remove_cabeca(&cauda_promo, lista_promocao);
+                                    circular_remove_cabeca(&cauda_promo);
                                     break;
                                 }
 
