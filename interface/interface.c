@@ -82,7 +82,7 @@ int submenu_adiciona_produto_circular()
 
     printf("1. Adicionar produto no início\n");
     printf("2. Adicionar produto no fim\n");
-    printf("0. Voltar");
+    printf("0. Voltar\n");
     printf("> ");
 
     scanf("%d%*c", &x);
@@ -97,7 +97,7 @@ int submenu_remove_produto_circular()
     printf("1. Remover produto no início\n");
     printf("2. Remover produto no fim\n");
     printf("3. Remover produto por ID\n");
-    printf("0. Voltar");
+    printf("0. Voltar\n");
     printf("> ");
 
     scanf("%d%*c", &x);

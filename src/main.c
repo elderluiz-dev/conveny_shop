@@ -12,7 +12,23 @@
 int main(){
     lista_pereciveis *lista_pere = criar_lista_pereciveis();
     lista_nao_pereciveis *list_nao_pereci = NULL;
+
+    lista_promo *lista_promocao = malloc(sizeof(lista_promo));
+    if (lista_promocao != NULL)
+    {
+        lista_promocao->cauda = NULL;   
+        lista_promocao->tamanho = 0;
+    }
+    else
+    {
+        printf("Erro de inicialização da lista de promoções!\n");
+        return 1;
+    }
+
+    p_promo *cauda_promo = NULL;
+
     int id_nao_perecivel = 1;
+    int id_promocao = 1;
     int id = 1;
 
     while(1)
@@ -364,23 +380,206 @@ int main(){
                 option = menu_promo();
                 switch(option)
                 {
-                case 1:
-                    limpa_terminal();
-                    
-                    break;
+                    case 1:
+                    {
+                        limpa_terminal();      
+                        int sub_option = submenu_adiciona_produto_circular();
 
-                case 0:
-                    break;
-                
-                default:
-                    limpa_terminal();
-                    printf("Opção inválida.");
-                    break;
+                        while(sub_option != 0)
+                        {
+                            switch(sub_option)
+                            {
+                                case 1:
+                                {
+                                    limpa_terminal();
+                                    p_promo novo_produto = {0};
+
+                                    novo_produto.id = id_promocao;
+                                    id_promocao++;
+
+                                    printf("Digite o nome do produto: ");
+
+                                    fgets(novo_produto.nome, sizeof(novo_produto.nome), stdin);
+                                    novo_produto.nome[strcspn(novo_produto.nome, "\n")] = '\0';
+
+                                    printf("Digite a quantidade do produto: ");
+                                    scanf("%d", &novo_produto.quantidade);
+                                    
+                                    printf("Digite o preço do produto: ");
+                                    scanf("%f", &novo_produto.preco);
+                                    
+                                    printf("Digite a data de validade do produto: ");
+
+                                    int c;
+                                    while ((c = getchar()) != '\n' && c != EOF);
+                                    fgets(novo_produto.validade, sizeof(novo_produto.validade), stdin);
+                                    novo_produto.validade[strcspn(novo_produto.validade, "\n")] = '\0';
+
+                                    novo_produto.prox = NULL;
+
+                                    circular_insere_cabeca(&cauda_promo, novo_produto, lista_promocao);
+                                    break;
+                                }
+
+                                case 2:
+                                {
+                                    limpa_terminal();
+                                    p_promo novo_produto = {0};
+                                    
+                                    novo_produto.id = id_promocao;
+                                    id_promocao++;
+
+                                    printf("Digite o nome do produto: ");
+
+                                    fgets(novo_produto.nome, sizeof(novo_produto.nome), stdin);
+                                    novo_produto.nome[strcspn(novo_produto.nome, "\n")] = '\0';
+
+                                    printf("Digite a quantidade do produto: ");
+                                    scanf("%d", &novo_produto.quantidade);
+                                    
+                                    printf("Digite o preço do produto: ");
+                                    scanf("%f", &novo_produto.preco);
+                                    
+                                    printf("Digite a data de validade do produto: ");
+
+                                    int c;
+                                    while ((c = getchar()) != '\n' && c != EOF);
+                                    fgets(novo_produto.validade, sizeof(novo_produto.validade), stdin);
+                                    novo_produto.validade[strcspn(novo_produto.validade, "\n")] = '\0';
+
+                                    novo_produto.prox = NULL;
+
+                                    circular_insere_cauda(&cauda_promo, novo_produto, lista_promocao);
+                                    break;
+                                }
+
+                                case 0:
+                                {
+                                    break;
+
+                                    default:
+                                    limpa_terminal();
+                                    printf("Opção inválida.");
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+
+                        break;
+                    }
+                    
+                    case 2:
+                    {
+                        int sub_option = submenu_remove_produto_circular();
+
+                        limpa_terminal();
+                        while(sub_option != 0)
+                        {
+                            switch(sub_option)
+                            {
+                                case 1:
+                                {
+                                    circular_remove_cabeca(&cauda_promo, lista_promocao);
+                                    break;
+                                }
+
+                                case 2:
+                                {
+                                    circular_remove_cauda(&cauda_promo, lista_promocao);
+                                    break;
+                                }
+
+                                case 3:
+                                {
+                                    limpa_terminal();
+                                    int id_produto;
+                                    
+                                    printf("Digite o ID do produto a ser removido: \n");
+                                    scanf("%d", &id_produto);
+
+                                    circular_remove_id(&cauda_promo, id_produto, lista_promocao);
+                                    break;
+                                }
+                                
+                                case 0:
+                                {
+                                    break;
+                                }
+
+                                default:
+                                {
+                                    limpa_terminal();
+                                    printf("Opção inválida.");
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                    }
+                    
+                    case 3:
+                    {
+                        char nome_produto[50];
+
+                        printf("Digite o nome do produto a ser buscado: ");
+
+                        fgets(nome_produto, sizeof(nome_produto), stdin);
+                        nome_produto[strcspn(nome_produto, "\n")] = '\0';
+
+                        circular_busca_nome(cauda_promo, nome_produto);
+                        break;
+                    }
+                    case 4:
+                    {
+                        circular_exibe_lista(&cauda_promo);
+                        break;
+                    }
+
+                    case 5:
+                    {
+                        int id_produto;
+                        int nova_quantidade;
+
+                        printf("Digite o ID do produto: \n");
+                        scanf("%d", &id_produto);
+
+                        printf("Digite a nova quantidade do produto: \n");
+                        scanf("%d", &nova_quantidade);
+
+                        circular_atualiza_quantidade(&cauda_promo, id, nova_quantidade);
+                        break;
+                    }
+                    
+                    case 6:
+                    {
+                        int tamanho_lista = circular_conta_lista(cauda_promo);
+                        printf("O tamanho atual da lista de promoções é de: %d", tamanho_lista);
+                        break;
+                    }
+
+                    case 7:
+                    {
+                        circular_limpa_lista(&cauda_promo, lista_promocao);
+                        break;
+                    }
+                    
+                    case 0:
+                    {
+                        break;
+                    }
+
+                    default:
+                    {
+                        limpa_terminal();
+                        printf("Opção inválida.");
+                        break;
+                    }
                 }
             }
-            
+
             break;
-        
+
         case 0:
             limpa_terminal();
             printf("O usuário encerrou o programa.\n");
@@ -391,5 +590,4 @@ int main(){
             break;
         }
     }
-    
 }
