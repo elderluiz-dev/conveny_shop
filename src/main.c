@@ -228,195 +228,345 @@ int main(){
                 limpa_terminal();
                 while(option != 0)
                 {
-                    ERROR_TYPE_T tratamento;
+                    ERROR_TYPE_T err;
                     int id_temp;
                     option = menu_n_pereciveis();
                     switch(option)
                     {
-                    case 1:
-                        p_nao_perecivel nov_item = {};
-                        if(list_nao_pereci == NULL)
+                        case 1:
                         {
-                            iniciar_lista_nperecivel(&list_nao_pereci);
+                            p_nao_perecivel nov_item = {};
                             if(list_nao_pereci == NULL)
                             {
+                                err = iniciar_list_dupla(&list_nao_pereci);
+                                if(err == ALLOCATION_ERROR)
+                                {
+                                    printf("Não foi possível iniciar a lista: Erro na alocação de memória.\n");
+                                    break;
+                                }
+                            }
+
+                            limpa_terminal();
+
+                            nov_item.id = id_nao_perecivel;
+                            printf("\nPreencha as informações abaixo: \n");
+                            printf("Nome do item: ");
+
+                            fgets(nov_item.nome, sizeof(nov_item.nome), stdin);
+                            nov_item.nome[strcspn(nov_item.nome, "\n")] = '\0';
+
+                            printf("Quantidade: ");
+                            scanf("%d", &nov_item.quantidade);
+                            while(nov_item.quantidade <= 0)
+                            {
+                                printf("Preco invalido!\n");
+                                printf("Digite novamente: ");
+                                scanf("%d", &nov_item.quantidade);
+                            }
+
+                            printf("Preco: ");
+                            scanf("%f", &nov_item.preco);
+                            while(nov_item.preco <= 0)
+                            {
+                                printf("Preco invalido!\n");
+                                printf("Digite novamente: ");
+                                scanf("%f", &nov_item.preco);
+                            }    
+
+                            printf("Validade: ");
+
+                            while (getchar() != '\n' && getchar() != EOF);
+                            fgets(nov_item.validade, sizeof(nov_item.validade), stdin);
+                            nov_item.validade[strcspn(nov_item.validade, "\n")] = '\0';
+
+                            if(list_nao_pereci->cabeca == NULL)
+                            {
+                                err = inserir_inicio_dupla(nov_item, &list_nao_pereci->cabeca);
+                                if(err == ALLOCATION_ERROR)
+                                {
+                                    printf("\nNão foi possível adicionar o produto! Erro de alocação de memória.\n");
+                                    break;
+                                }
+
+                                printf("\nProduto adicionado com sucesso\n");
+                                id_nao_perecivel++;
+                                list_nao_pereci->tamanho++;
                                 break;
                             }
-                        }
 
-                        limpa_terminal();
+                            limpa_terminal();
+                            int sub_menu = submenu_adiciona_produto_nperecivel();
 
-                        nov_item.id = id_nao_perecivel;
-                        printf("\nPreencha as informações abaixo: \n");
-                        printf("Nome do item: ");
+                            while (sub_menu != 0)
+                            {
+                                switch (sub_menu)
+                                {
+                                    case 1:
+                                    {
+                                        limpa_terminal();
 
-                        fgets(nov_item.nome, sizeof(nov_item.nome), stdin);
-                        nov_item.nome[strcspn(nov_item.nome, "\n")] = '\0';
-                        
-                        printf("Quantidade: ");
-                        scanf("%d", &nov_item.quantidade);
-                        while(nov_item.quantidade <= 0)
-                        {
-                            printf("Preco invalido!\n");
-                            printf("Digite novamente: ");
-                            scanf("%d", &nov_item.quantidade);
-                        }
-                        
-                        printf("Preco: ");
-                        scanf("%f", &nov_item.preco);
-                        while(nov_item.preco <= 0)
-                        {
-                            printf("Preco invalido!\n");
-                            printf("Digite novamente: ");
-                            scanf("%f", &nov_item.preco);
-                        }    
+                                        err = inserir_inicio_dupla(nov_item, &list_nao_pereci->cabeca);
+                                        if(err == ALLOCATION_ERROR)
+                                        {
+                                            printf("\nNão foi possível adicionar o produto! Erro de alocação de memória.\n");
+                                            break;
+                                        }
 
-                        printf("Validade: ");
+                                        printf("\nProduto adicionado com sucesso\n");
+                                        id_nao_perecivel++;
+                                        list_nao_pereci->tamanho++;
 
-                        while (getchar() != '\n' && getchar() != EOF);
-                        fgets(nov_item.validade, sizeof(nov_item.validade), stdin);
-                        nov_item.validade[strcspn(nov_item.validade, "\n")] = '\0';
+                                        break;
+                                    }
 
-                        tratamento = inserir(nov_item, &list_nao_pereci->cabeca);
-                            
-                        if(tratamento == ALLOCATION_ERROR) break;
+                                    case 2:
+                                    {
+                                        limpa_terminal();
 
-                        printf("\nProduto adicionado com sucesso\n");
-                        id_nao_perecivel++;
-                        list_nao_pereci->tamanho++;
-                        
-                        break;
-                    
-                    case 2:
-                        limpa_terminal();
-                        if(list_nao_pereci == NULL)
-                        {
-                            printf("\nNão possui produtos.\n");
-                            break;
-                        }
-                        if(list_nao_pereci->cabeca == NULL)
-                        {
-                            printf("\nNão possui produtos.\n");
-                            break;
-                        }
+                                        err = inserir_fim_dupla(nov_item, &list_nao_pereci->cabeca);
 
-                        exi_remover(list_nao_pereci->cabeca);
+                                        if(err == ALLOCATION_ERROR)
+                                        {
+                                            printf("\nNão foi possível adicionar o produto! Erro de alocação de memória.\n");
+                                            break;
+                                        }
 
-                        printf("\nQual id do item que deseja remover?");
-                        scanf("%d", &id_temp);
+                                        printf("\nProduto adicionado com sucesso\n");
+                                        id_nao_perecivel++;
+                                        list_nao_pereci->tamanho++;
+                                        
+                                        break;
+                                    }
 
-                        tratamento = remover(list_nao_pereci, id_temp);
-                        if(tratamento == SUCCESS)
-                        {
-                            printf("\nProduto removido com sucesso.\n");
-                        }
+                                    case 0:
+                                    {
+                                        limpa_terminal();
+                                        break;
+                                    }
+                                    default:
+                                    {
+                                        limpa_terminal();
 
-                        break;
+                                        printf("Opção inválida, tente novamente.\n");
+                                        break;
+                                    }
+                                }
 
-                    case 3:
-                        limpa_terminal();
-                        char prod_busca[50];
-                        if(list_nao_pereci == NULL)
-                        {
-                            printf("\nNão possui produtos.\n");
-                            break;
-                        }
-                        if(list_nao_pereci->cabeca == NULL)
-                        {
-                            printf("\nNão possui produtos.\n");
-                            break;
-                        }
-                        printf("\nDigite o nome:\n");
-                        fgets(prod_busca, sizeof(prod_busca), stdin);
-                        prod_busca[strcspn(prod_busca, "\n")] = '\0';
-                        buscar(list_nao_pereci->cabeca, prod_busca);
-                        break;
+                                break;
+                            }
 
-                    case 4:
-                        limpa_terminal();
-
-                        if(list_nao_pereci == NULL)
-                        {
-                            printf("\nA lista está vazia.\n");
-                            break;
-                        }
-                        if(list_nao_pereci->tamanho == 0)
-                        {
-                            printf("\nA lista está vazia.\n");
-                            break;
-                        }
-                        exibir(list_nao_pereci->cabeca);
-
-                        break;
-
-                    case 5:
-                        limpa_terminal();
-
-                        if(list_nao_pereci == NULL)
-                        {
-                            printf("\nA lista está vazia.\n");
-                            break;
-                        }
-                        if(list_nao_pereci->tamanho == 0)
-                        {
-                            printf("\nA lista está vazia.\n");
-                            break;
-                        }
-                        exi_inverso(list_nao_pereci->cabeca);
-
-                        break;
-
-                    case 6:
-                        limpa_terminal();
-
-                        if(list_nao_pereci == NULL)
-                        {
-                            printf("\nA lista está vazia.\n");
-                            break;
-                        }
-                        if(list_nao_pereci->tamanho == 0)
-                        {
-                            printf("\nA lista esta vazia.\n");
                             break;
                         }
 
-                        printf("Digite o id do produto que deseja editar: ");
-                        scanf("%d", &id_temp);
-                        
-                        tratamento = atualizar_quant(list_nao_pereci->cabeca, id_temp);
-
-                        if(tratamento == ID_NOTFOUND)
+                        case 2:
                         {
-                            printf("\nId não encontrado!\n");
+                            limpa_terminal();
+
+                            int sub_menu = submenu_remove_produto_nperecivel();
+
+                            while (sub_menu != 0)
+                            {
+                                switch (sub_menu)
+                                {
+                                    case 1:
+                                    {
+                                        limpa_terminal();
+                                        err = remover_inicio_dupla(list_nao_pereci);
+
+                                        if(err == SIZE_ERROR)
+                                        {
+                                            printf("A lista está vazia!");
+                                            break;
+                                        }
+
+                                        printf("Produto removido!");
+                                        break;
+                                    }
+
+                                    case 2:
+                                    {
+                                        limpa_terminal();
+                                        err = remover_fim_dupla(list_nao_pereci);
+
+                                        if(err == SIZE_ERROR)
+                                        {
+                                            printf("A lista está vazia!");
+
+                                            break;
+                                        }
+
+                                        printf("Produto removido!");
+
+                                        break;
+                                    }
+
+                                    case 3:
+                                    {
+                                        limpa_terminal();
+
+                                        printf("Digite o id que deseja remover:");
+                                        scanf("%d", &id_temp);
+
+                                        err = remover_id_dupla(list_nao_pereci, id_temp);
+
+                                        if(err == SIZE_ERROR)
+                                        {
+                                            printf("A lista está vazia!");
+
+                                            break;
+                                        }
+                                        if(err == ID_NOTFOUND)
+                                        {
+                                            printf("\nId não existente.\n");
+
+                                            break;
+                                        }
+
+                                        printf("Produto removido!");
+                                        break;
+                                    }
+
+                                    case 0:
+                                    {
+                                        limpa_terminal();
+                                        break;
+                                    }
+
+                                    default:
+                                    {
+                                        limpa_terminal();
+
+                                        printf("Opção inválida, tente novamente.\n");
+                                        break;
+                                    }
+                                }
+
+                                break;
+                            }
+
                             break;
                         }
 
-                        break;
-
-                    case 7:
-                        limpa_terminal();
-                        printf("Quantidade de produtos não perecíveis: %d\n", list_nao_pereci->tamanho);
-
-                        break;
-
-                    case 8:
-                        limpa_terminal();
-
-                        if(list_nao_pereci == NULL)
+                        case 3:
                         {
-                            printf("\nVocê não possui uma lista!\n");
+                            limpa_terminal();
+                            char prod_busca[50];
+                            if(list_nao_pereci == NULL)
+                            {
+                                printf("\nNão possui produtos.\n");
+                                break;
+                            }
+                            if(list_nao_pereci->cabeca == NULL)
+                            {
+                                printf("\nNão possui produtos.\n");
+                                break;
+                            }
+                            printf("\nDigite o nome:\n");
+                            fgets(prod_busca, sizeof(prod_busca), stdin);
+                            prod_busca[strcspn(prod_busca, "\n")] = '\0';
+                            buscar_dupla(list_nao_pereci->cabeca, prod_busca);
+                            break;
                         }
-                        tratamento = limpar_list(&list_nao_pereci);
 
-                        break;
+                        case 4:
+                        {
+                            limpa_terminal();
 
-                    case 0:
-                        break;
-                    
-                    default:
-                        limpa_terminal();
-                        printf("Opção inválida.");
-                        break;
+                            if(list_nao_pereci == NULL)
+                            {
+                                printf("\nA lista está vazia.\n");
+                                break;
+                            }
+                            if(list_nao_pereci->tamanho == 0)
+                            {
+                                printf("\nA lista está vazia.\n");
+                                break;
+                            }
+                            exibir_dupla(list_nao_pereci->cabeca);
+
+                            break;
+                        }
+
+                        case 5:
+                        {
+                            limpa_terminal();
+
+                            if(list_nao_pereci == NULL)
+                            {
+                                printf("\nA lista está vazia.\n");
+                                break;
+                            }
+                            if(list_nao_pereci->tamanho == 0)
+                            {
+                                printf("\nA lista está vazia.\n");
+                                break;
+                            }
+                            exi_inver_dupla(list_nao_pereci->cabeca, 1);
+
+                            break;
+                        }
+
+                        case 6:
+                        {
+                            limpa_terminal();
+
+                            if(list_nao_pereci == NULL)
+                            {
+                                printf("\nA lista está vazia.\n");
+                                break;
+                            }
+                            if(list_nao_pereci->tamanho == 0)
+                            {
+                                printf("\nA lista esta vazia.\n");
+                                break;
+                            }
+
+                            printf("Digite o id do produto que deseja editar: ");
+                            scanf("%d", &id_temp);
+
+                            err = atualizar_dupla(list_nao_pereci->cabeca, id_temp);
+
+                            if(err == ID_NOTFOUND)
+                            {
+                                printf("\nId não encontrado!\n");
+                                break;
+                            }
+
+                            break;
+                        }
+
+                        case 7:
+                        {
+                            limpa_terminal();
+                            printf("Quantidade de produtos não perecíveis: %d\n", list_nao_pereci->tamanho);
+
+                            break;
+                        }
+
+                        case 8:
+                        {
+                            limpa_terminal();
+
+                            if(list_nao_pereci == NULL)
+                            {
+                                printf("\nVocê não possui uma lista!\n");
+                            }
+                            err = limpar_dupla(&list_nao_pereci);
+
+                            break;
+                        }
+
+                        case 0:
+                        {
+                            break;
+                        }
+
+                        default:
+                        {
+                            limpa_terminal();
+                            printf("Opção inválida.");
+                            break;
+                        }
                     }
                 }
                 

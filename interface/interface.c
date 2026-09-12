@@ -138,6 +138,36 @@ int submenu_remove_produto_perecivel()
     return x;
 }
 
+int submenu_adiciona_produto_nperecivel()
+{
+    int x;
+
+    printf("\n===== PRODUTOS NÃO PERECÍVEIS =====\n");
+    printf("1. Adicionar produto no início\n");
+    printf("2. Adicionar produto no fim\n");
+    printf("0. Cancelar operação\n");
+    printf("> ");
+
+    scanf("%d%*c", &x);
+
+    return x;
+}
+
+int submenu_remove_produto_nperecivel()
+{
+    int x;
+
+    printf("\n===== PRODUTOS NÃO PERECÍVEIS =====\n");
+    printf("1. Remover produto no início\n");
+    printf("2. Remover produto no fim\n");
+    printf("3. Remover produto por ID\n");
+    printf("0. Voltar\n");
+    printf("> ");
+
+    scanf("%d%*c", &x);
+    
+    return x;
+}
 
 void limpa_terminal(){
     system("clear");
