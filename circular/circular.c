@@ -167,12 +167,6 @@ void circular_remove_id(p_promo **cauda, int id, lista_promo *lista)
 
 void circular_busca_nome(p_promo *cauda, char *nome)
 {
-    if (cauda == NULL)
-    {
-        printf("Não foi possível buscar o produto, pois a lista está vazia.\n");
-        return; 
-    }
-
     p_promo *atual = cauda->prox;
     int encontrou = 0;
 
@@ -201,12 +195,6 @@ void circular_busca_nome(p_promo *cauda, char *nome)
 
 void circular_atualiza_quantidade(p_promo **cauda, int id, int nova_quantidade)
 {
-    if(*cauda == NULL)
-    {
-        printf("Não foi possível atualizar a quantidade, pois a lista está vazia.\n");
-        return;
-    }
-
     p_promo *atual = (*cauda)->prox;
     int encontrou = 0;
 
@@ -274,7 +262,7 @@ void circular_limpa_lista(p_promo **cauda, lista_promo *lista)
 {
     if(*cauda == NULL)
     {
-        printf("A lista já se encontra vazia.\n");
+        printf("A lista já se encontra limpa.\n");
         return;
     }
 

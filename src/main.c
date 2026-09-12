@@ -433,7 +433,7 @@ int main(){
                     {
                         case 1:
                         {
-                            limpa_terminal();      
+                            limpa_terminal();
                             int sub_option = submenu_adiciona_produto_circular();
 
                             while(sub_option != 0)
@@ -506,20 +506,24 @@ int main(){
 
                                     case 0:
                                     {
-                                        break;
-
-                                        default:
                                         limpa_terminal();
-                                        printf("Opção inválida.");
+                                        break;
+                                    }
+
+                                    default:
+                                    {
+                                        limpa_terminal();
+                                        printf("A Opção selecionada é inválida.\n");
                                         break;
                                     }
                                 }
+
                                 break;
                             }
 
                             break;
                         }
-                        
+
                         case 2:
                         {
                             int sub_option = submenu_remove_produto_circular();
@@ -563,13 +567,14 @@ int main(){
                                     
                                     case 0:
                                     {
+                                        limpa_terminal();
                                         break;
                                     }
 
                                     default:
                                     {
                                         limpa_terminal();
-                                        printf("Opção inválida.");
+                                        printf("A Opção selecionada é inválida.\n");
                                         break;
                                     }
                                 }
@@ -581,6 +586,13 @@ int main(){
                         case 3:
                         {
                             limpa_terminal();
+
+                            if(cauda_promo == NULL)
+                            {
+                                printf("Não foi possível buscar o produto, pois a lista está vazia.\n");
+                                break;
+                            }
+
                             char nome_produto[50];
 
                             printf("Digite o nome do produto a ser buscado: ");
@@ -591,6 +603,7 @@ int main(){
                             circular_busca_nome(cauda_promo, nome_produto);
                             break;
                         }
+                        
                         case 4:
                         {
                             limpa_terminal();
@@ -604,6 +617,12 @@ int main(){
 
                             int id_produto;
                             int nova_quantidade;
+
+                            if(cauda_promo == NULL)
+                            {
+                                printf("Não foi possível atualizar a quantidade, pois a lista está vazia.\n");
+                                break;
+                            }
 
                             printf("Digite o ID do produto: ");
                             scanf("%d", &id_produto);
@@ -619,7 +638,7 @@ int main(){
                         {
                             limpa_terminal();
                             int tamanho_lista = circular_conta_lista(cauda_promo);
-                            printf("O tamanho atual da lista de promoções é de: %d", tamanho_lista);
+                            printf("O tamanho atual da lista de promoções é de: %d\n", tamanho_lista);
                             break;
                         }
 
@@ -632,13 +651,14 @@ int main(){
                         
                         case 0:
                         {
+                            limpa_terminal();
                             break;
                         }
 
                         default:
                         {
                             limpa_terminal();
-                            printf("Opção inválida.");
+                            printf("A Opção selecionada é inválida.\n");
                             break;
                         }
                     }
@@ -650,13 +670,14 @@ int main(){
             case 0:
             {
                 limpa_terminal();
-                printf("O usuário encerrou o programa.\n");
+                printf("O programa foi encerrado pelo usuário.\n");
                 return 0;
             }
 
             default:
             {
-                printf("Opção inválida.");
+                limpa_terminal();
+                printf("A Opção selecionada é inválida.\n");
                 break;
             }
         }
