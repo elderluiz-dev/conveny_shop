@@ -113,6 +113,12 @@ int main(){
                     
                     case 2:
                         limpa_terminal();
+
+                        if(lista_pere->tamanho == 0){
+                            printf("Lista vazia\n");
+                            break;
+                        }
+
                         int sub_select_rem = submenu_remove_produto_perecivel();
                         switch(sub_select_rem)
                         {
