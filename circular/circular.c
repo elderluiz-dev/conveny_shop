@@ -70,7 +70,7 @@ void circular_remove_cabeca(p_promo **cauda)
 {
     if(*cauda == NULL)
     {
-        printf("Não foi possível realizar a remoção do item pois a lisa está vazia\n");
+        printf("Não foi possível realizar a remoção do item pois a lista está vazia\n");
         return;
     }
     
@@ -85,7 +85,7 @@ void circular_remove_cauda(p_promo **cauda, lista_promo *lista)
 {
     if(*cauda == NULL)
     {
-        printf("Não foi possível realizar a remoção pois a lisa está vazia\n");
+        printf("Não foi possível realizar a remoção do item pois a lista está vazia\n");
         return;
     }
 

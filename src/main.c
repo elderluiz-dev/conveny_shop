@@ -471,9 +471,9 @@ int main(){
                     
                     case 2:
                     {
+                        limpa_terminal();
                         int sub_option = submenu_remove_produto_circular();
 
-                        limpa_terminal();
                         while(sub_option != 0)
                         {
                             switch(sub_option)
@@ -495,7 +495,7 @@ int main(){
                                     limpa_terminal();
                                     int id_produto;
                                     
-                                    printf("Digite o ID do produto a ser removido: \n");
+                                    printf("Digite o ID do produto a ser removido: ");
                                     scanf("%d", &id_produto);
 
                                     circular_remove_id(&cauda_promo, id_produto, lista_promocao);
@@ -514,7 +514,10 @@ int main(){
                                     break;
                                 }
                             }
+                            
+                            break;
                         }
+
                         break;
                     }
                     
@@ -532,12 +535,16 @@ int main(){
                     }
                     case 4:
                     {
+                        limpa_terminal();
+
                         circular_exibe_lista(&cauda_promo);
                         break;
                     }
 
                     case 5:
                     {
+                        limpa_terminal();
+
                         int id_produto;
                         int nova_quantidade;
 
@@ -553,6 +560,7 @@ int main(){
                     
                     case 6:
                     {
+                        limpa_terminal();
                         int tamanho_lista = circular_conta_lista(cauda_promo);
                         printf("O tamanho atual da lista de promoções é de: %d", tamanho_lista);
                         break;
@@ -560,6 +568,7 @@ int main(){
 
                     case 7:
                     {
+                        limpa_terminal();
                         circular_limpa_lista(&cauda_promo, lista_promocao);
                         break;
                     }
