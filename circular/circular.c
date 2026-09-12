@@ -128,12 +128,12 @@ void circular_remove_id(p_promo **cauda, int id, lista_promo *lista)
 
     if (atual->prox == (*cauda)->prox)
     {
-        remove_cabeca(cauda); 
+        circular_remove_cabeca(cauda); 
         return;
     }
     else if (atual->prox == *cauda)
     {
-        remove_cauda(cauda, lista);
+        circular_remove_cauda(cauda, lista);
         return;
     }
 
