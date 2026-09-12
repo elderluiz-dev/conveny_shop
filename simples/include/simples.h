@@ -6,7 +6,7 @@ typedef struct perecivel
     char nome[50];
     int quantidade;
     float preco;
-    char validade[10];
+    char validade[20];
     struct perecivel *prox;
 } p_perecivel;
 
