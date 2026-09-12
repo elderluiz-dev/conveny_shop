@@ -17,7 +17,7 @@ int main(){
     lista_promo *lista_promocao = malloc(sizeof(lista_promo));
     if (lista_promocao != NULL)
     {
-        lista_promocao->cauda = NULL;   
+        lista_promocao->cauda = NULL;
         lista_promocao->tamanho = 0;
     }
     else
