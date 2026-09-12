@@ -82,20 +82,65 @@ int main(){
                     novo.validade[strcspn(novo.validade, "\n")] = '\0';
 
                     novo.prox = NULL;
-                    adicionar_perecivel(novo, &lista_pere);
+                    int sub_select_add = submenu_adiciona_produto_perecivel();
+                    switch(sub_select_add)
+                    {
+                    case 1:
+                        adicionar_perecivel_inicio(novo, &lista_pere);
+                        id++;
+                        limpa_terminal();
+                        printf("Produto adicionado com sucesso!");
+                        break;
 
-                    id++;
-                    limpa_terminal();
-                    printf("Produto adicionado com sucesso!");
+                    case 2:
+                        adicionar_perecivel_fim(novo, &lista_pere);
+                        id++;
+                        limpa_terminal();
+                        printf("Produto adicionado com sucesso!");
+                        break;
+                    
+                    case 0:
+                        limpa_terminal();
+                        break;
+
+                    default:
+                        printf("Opção inválida\n");
+                        break;
+                    }
+
                     break;
                 
                 case 2:
-                    int rem_id;
                     limpa_terminal();
-                    printf("Digite o ID do produto que quer remvoer: ");
-                    scanf("%d", &rem_id);
-                    getchar();
-                    remover_perecivel(&lista_pere, rem_id);
+                    int sub_select_rem = submenu_remove_produto_perecivel();
+                    switch(sub_select_rem)
+                    {
+                    case 1:
+                        remover_perecivel_inicio(&lista_pere);
+                        break;
+
+                    case 2:
+                        remover_perecivel_inicio(&lista_pere);
+                        break;
+
+                    case 3:
+                        int rem_id;
+                        limpa_terminal();
+                        printf("Digite o ID do produto que quer remover: ");
+                        scanf("%d", &rem_id);
+                        getchar();
+                        remover_perecivel_id(&lista_pere, rem_id);
+                        break;
+
+                    case 0:
+                        limpa_terminal();
+                        break;
+
+                    default:
+                        printf("Opção inválida\n");
+                        break;
+                    }
+
                     break;
 
                 case 3:
