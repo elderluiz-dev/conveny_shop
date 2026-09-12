@@ -32,6 +32,8 @@ void circular_insere_cabeca(p_promo **cauda, p_promo novo_produto, lista_promo *
         (*cauda)->prox = produto;
         produto->prox = cabeca;
     }
+
+    printf("Produto inserido com sucesso.\n");
 }
 
 void circular_insere_cauda(p_promo **cauda, p_promo novo_produto, lista_promo *lista)
@@ -65,6 +67,8 @@ void circular_insere_cauda(p_promo **cauda, p_promo novo_produto, lista_promo *l
         lista->cauda = produto;
         *cauda = produto;
     }
+
+    printf("Produto inserido com sucesso.\n");
 }
 
 void circular_remove_cabeca(p_promo **cauda)

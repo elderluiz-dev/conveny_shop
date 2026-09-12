@@ -1,7 +1,5 @@
 #pragma once
 
-#include "produto.h"
-
 typedef struct promo
 {
     int id;
@@ -17,6 +15,8 @@ typedef struct lista_promo
     p_promo *cauda;
     int tamanho;
 } lista_promo;
+
+#include "produto.h"
 
 void circular_insere_cabeca(p_promo **cauda, p_promo novo_produto, lista_promo *lista);
 void circular_insere_cauda(p_promo **cauda, p_promo novo_produto, lista_promo *lista);

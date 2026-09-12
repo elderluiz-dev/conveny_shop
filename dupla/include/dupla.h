@@ -1,7 +1,5 @@
 #pragma once
 
-#include "produto.h"
-
 typedef struct nao_perecivel
 {
     int id;
@@ -18,6 +16,9 @@ typedef struct lista_nao_pereciveis
     p_nao_perecivel *cabeca;
     int tamanho;
 } lista_nao_pereciveis;
+
+
+#include "produto.h"
 
 ERROR_TYPE_T iniciar_list_dupla(lista_nao_pereciveis **lista);
 ERROR_TYPE_T inserir_inicio_dupla(p_nao_perecivel novo_prod, p_nao_perecivel **cabeça);
