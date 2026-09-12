@@ -6,7 +6,7 @@ typedef struct promo
     char nome[50];
     int quantidade;
     float preco;
-    char validade[10];
+    char validade[20];
     struct promo *prox;
 } p_promo;
 
