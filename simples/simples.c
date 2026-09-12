@@ -17,7 +17,7 @@ ERROR_TYPE_T criar_lista_pereciveis(lista_pereciveis **lista_pere){
     return SUCCESS;
 }
 
-ERROR_TYPE_T adicionar_perecivel(p_perecivel novo, lista_pereciveis* *lista){
+ERROR_TYPE_T adicionar_perecivel_inicio(p_perecivel novo, lista_pereciveis* *lista){
     p_perecivel* novo_produto = malloc(sizeof(*novo_produto));
     if(novo_produto == NULL)
     {
@@ -30,11 +30,36 @@ ERROR_TYPE_T adicionar_perecivel(p_perecivel novo, lista_pereciveis* *lista){
     novo_produto->quantidade = novo.quantidade;
     strcpy(novo_produto->validade, novo.validade);
     novo_produto->prox = novo.prox;
-    
+
     if((*lista)->tamanho == 0){
         (*lista)->cabeca = novo_produto;
         (*lista)->tamanho = 1;
+        return SUCCESS;
+    }
 
+    novo_produto->prox = (*lista)->cabeca;
+    (*lista)->cabeca = novo_produto;
+
+    return SUCCESS;
+}
+
+ERROR_TYPE_T adicionar_perecivel_fim(p_perecivel novo, lista_pereciveis* *lista){
+    p_perecivel* novo_produto = malloc(sizeof(*novo_produto));
+    if(novo_produto == NULL)
+    {
+        return ALLOCATION_ERROR;
+    }
+    
+    novo_produto->id = novo.id;
+    strcpy(novo_produto->nome, novo.nome);
+    novo_produto->preco = novo.preco;
+    novo_produto->quantidade = novo.quantidade;
+    strcpy(novo_produto->validade, novo.validade);
+    novo_produto->prox = novo.prox;
+
+    if((*lista)->tamanho == 0){
+        (*lista)->cabeca = novo_produto;
+        (*lista)->tamanho = 1;
         return SUCCESS;
     }
 
@@ -66,7 +91,33 @@ ERROR_TYPE_T exibir_pereciveis(p_perecivel* atual){
     return SUCCESS;
 }
 
-ERROR_TYPE_T remover_perecivel(lista_pereciveis* *lista, int id){
+ERROR_TYPE_T remover_perecivel_inicio(lista_pereciveis* *lista){
+    p_perecivel* atual = (*lista)->cabeca;
+    (*lista)->cabeca = (*lista)->cabeca->prox;
+
+    free(atual);
+    (*lista)->tamanho--;
+    printf("Produto removido com sucesso!\n");
+
+    return SUCCESS;
+}
+
+ERROR_TYPE_T remover_perecivel_final(lista_pereciveis* *lista){
+    p_perecivel* atual = (*lista)->cabeca;
+
+    while(atual != NULL)
+    {
+        atual = atual->prox;
+    }
+
+    free(atual);
+    (*lista)->tamanho--;
+    printf("Produto removido com sucesso!\n");
+
+    return SUCCESS;
+}
+
+ERROR_TYPE_T remover_perecivel_id(lista_pereciveis* *lista, int id){
     p_perecivel* atual = (*lista)->cabeca;
     p_perecivel* anterior = NULL;
 
