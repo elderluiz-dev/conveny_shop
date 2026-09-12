@@ -93,10 +93,12 @@ void remover_perecivel(lista_pereciveis* *lista, int id){
 
 void esvaziar_pereciveis(lista_pereciveis* *lista){
     p_perecivel* atual = (*lista)->cabeca;
+    
     while(atual != NULL)
     {
+        p_perecivel* prox = atual->prox;
         free(atual);
-        atual = atual->prox;
+        atual = prox;
     }
 
     (*lista)->cabeca = NULL;
@@ -108,7 +110,6 @@ void esvaziar_pereciveis(lista_pereciveis* *lista){
 
 void editar_qtd_perecivel(lista_pereciveis* *lista, int id){
     p_perecivel* atual = (*lista)->cabeca;
-    p_perecivel* anterior = NULL; 
 
     if(atual == NULL){
         printf("Lista vazia.");
@@ -117,7 +118,6 @@ void editar_qtd_perecivel(lista_pereciveis* *lista, int id){
 
     while(atual != NULL && atual->id != id)
     {
-        anterior = atual;
         atual = atual->prox;
     }
 
