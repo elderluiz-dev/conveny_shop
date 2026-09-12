@@ -10,7 +10,8 @@
 #include "produto.h"
 
 int main(){
-    lista_pereciveis *lista_pere = criar_lista_pereciveis();
+    lista_pereciveis *lista_pere = NULL;
+    criar_lista_pereciveis(&lista_pere);
     lista_nao_pereciveis *list_nao_pereci = NULL;
 
     lista_promo *lista_promocao = malloc(sizeof(lista_promo));
@@ -471,9 +472,9 @@ int main(){
                     
                     case 2:
                     {
-                        limpa_terminal();
                         int sub_option = submenu_remove_produto_circular();
 
+                        limpa_terminal();
                         while(sub_option != 0)
                         {
                             switch(sub_option)
@@ -495,7 +496,7 @@ int main(){
                                     limpa_terminal();
                                     int id_produto;
                                     
-                                    printf("Digite o ID do produto a ser removido: ");
+                                    printf("Digite o ID do produto a ser removido: \n");
                                     scanf("%d", &id_produto);
 
                                     circular_remove_id(&cauda_promo, id_produto, lista_promocao);
@@ -514,10 +515,7 @@ int main(){
                                     break;
                                 }
                             }
-                            
-                            break;
                         }
-
                         break;
                     }
                     
@@ -535,16 +533,12 @@ int main(){
                     }
                     case 4:
                     {
-                        limpa_terminal();
-
                         circular_exibe_lista(&cauda_promo);
                         break;
                     }
 
                     case 5:
                     {
-                        limpa_terminal();
-
                         int id_produto;
                         int nova_quantidade;
 
@@ -560,7 +554,6 @@ int main(){
                     
                     case 6:
                     {
-                        limpa_terminal();
                         int tamanho_lista = circular_conta_lista(cauda_promo);
                         printf("O tamanho atual da lista de promoções é de: %d", tamanho_lista);
                         break;
@@ -568,7 +561,6 @@ int main(){
 
                     case 7:
                     {
-                        limpa_terminal();
                         circular_limpa_lista(&cauda_promo, lista_promocao);
                         break;
                     }
