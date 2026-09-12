@@ -68,44 +68,69 @@ void circular_insere_cauda(p_promo **cauda, p_promo novo_produto, lista_promo *l
 
 void circular_remove_cabeca(p_promo **cauda)
 {
-    if(*cauda == NULL)
+    if (*cauda == NULL)
     {
         printf("Não foi possível realizar a remoção do item pois a lista está vazia\n");
         return;
     }
-    
+
     p_promo *cabeca = (*cauda)->prox;
 
-    free(cabeca);
+    if (cabeca == *cauda)
+    {
+        free(cabeca);
+        *cauda = NULL;
+    }
+    else 
+    {
+        (*cauda)->prox = cabeca->prox; 
+        free(cabeca);
+    }
 
-    (*cauda)->prox = (*cauda)->prox->prox;
+    printf("Produto removido com sucesso da lista.\n");
 }
 
 void circular_remove_cauda(p_promo **cauda, lista_promo *lista)
 {
-    if(*cauda == NULL)
-    {
+    if (*cauda == NULL) {
         printf("Não foi possível realizar a remoção do item pois a lista está vazia\n");
         return;
     }
 
     p_promo *atual = *cauda;
 
-    while(atual->prox != *cauda)
-    {
+    if (atual->prox == *cauda) {
+        free(*cauda);
+        *cauda = NULL;
+
+        if (lista != NULL)
+        {
+            lista->cauda = NULL;
+        }
+
+        printf("Produto removido com sucesso da lista.\n");
+        return;
+    }
+
+    while (atual->prox != *cauda) {
         atual = atual->prox;
     }
 
-    free(atual->prox);
+    p_promo *remover = *cauda;
+    atual->prox = remover->prox;
+    *cauda = atual;
 
-    atual->prox = (*cauda)->prox;
-    lista->cauda = atual->prox;
+    if (lista) {
+        lista->cauda = atual;
+    }
+
+    free(remover);
+    printf("Produto removido com sucesso da lista.\n");
 }
 
 void circular_remove_id(p_promo **cauda, int id, lista_promo *lista)
 {
-    if(*cauda == NULL)
-    {
+    if (*cauda == NULL) {
         printf("Não foi possível realizar a remoção pois a lista está vazia\n");
         return;
     }
@@ -113,11 +138,13 @@ void circular_remove_id(p_promo **cauda, int id, lista_promo *lista)
     p_promo *atual = *cauda;
     int encontrou = 0;
 
+    // Busca o nó ANTERIOR ao que possui o ID procurado
     do {
         if (atual->prox->id == id) {
             encontrou = 1;
             break;
         }
+        
         atual = atual->prox;
     } while (atual != *cauda);
 
@@ -126,20 +153,22 @@ void circular_remove_id(p_promo **cauda, int id, lista_promo *lista)
         return;
     }
 
-    if (atual->prox == (*cauda)->prox)
-    {
-        circular_remove_cabeca(cauda); 
+    if (atual->prox == (*cauda)->prox) {
+        circular_remove_cabeca(cauda);
         return;
     }
-    else if (atual->prox == *cauda)
-    {
+
+    if (atual->prox == *cauda) {
         circular_remove_cauda(cauda, lista);
         return;
     }
 
-    p_promo *remover = atual->prox; 
-    atual->prox = remover->prox;    
-    free(remover);                  
+    // Remoção do meio da lista
+    p_promo *remover = atual->prox;
+    atual->prox = remover->prox;
+    free(remover);
+
+    printf("Produto removido com sucesso da lista.\n");
 }
 
 void circular_busca_nome(p_promo *cauda, char *nome)
