@@ -17,7 +17,6 @@ typedef struct lista_nao_pereciveis
     int tamanho;
 } lista_nao_pereciveis;
 
-
 #include "produto.h"
 
 ERROR_TYPE_T iniciar_list_dupla(lista_nao_pereciveis **lista);
