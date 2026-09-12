@@ -4,7 +4,7 @@
 
 #include "circular.h"
 
-void insere_cabeca(p_promo **cauda, p_promo novo_produto, lista_promo *lista)
+void circular_insere_cabeca(p_promo **cauda, p_promo novo_produto, lista_promo *lista)
 {
     p_promo *produto = (p_promo *)malloc(sizeof(p_promo));
 
@@ -33,7 +33,7 @@ void insere_cabeca(p_promo **cauda, p_promo novo_produto, lista_promo *lista)
     }
 }
 
-void insere_cauda(p_promo **cauda, p_promo novo_produto, lista_promo *lista)
+void circular_insere_cauda(p_promo **cauda, p_promo novo_produto, lista_promo *lista)
 {
     p_promo *produto = (p_promo *)malloc(sizeof(p_promo));
 
@@ -66,7 +66,7 @@ void insere_cauda(p_promo **cauda, p_promo novo_produto, lista_promo *lista)
     }
 }
 
-void remove_cabeca(p_promo **cauda)
+void circular_remove_cabeca(p_promo **cauda)
 {
     if(*cauda == NULL)
     {
@@ -81,7 +81,7 @@ void remove_cabeca(p_promo **cauda)
     (*cauda)->prox = (*cauda)->prox->prox;
 }
 
-void remove_cauda(p_promo **cauda, lista_promo *lista)
+void circular_remove_cauda(p_promo **cauda, lista_promo *lista)
 {
     if(*cauda == NULL)
     {
@@ -102,7 +102,7 @@ void remove_cauda(p_promo **cauda, lista_promo *lista)
     lista->cauda = atual->prox;
 }
 
-void remove_id(p_promo **cauda, int id, lista_promo *lista)
+void circular_remove_id(p_promo **cauda, int id, lista_promo *lista)
 {
     if(*cauda == NULL)
     {
@@ -128,12 +128,12 @@ void remove_id(p_promo **cauda, int id, lista_promo *lista)
 
     if (atual->prox == (*cauda)->prox)
     {
-        remove_cabeca(cauda); 
+        circular_remove_cabeca(cauda); 
         return;
     }
     else if (atual->prox == *cauda)
     {
-        remove_cauda(cauda, lista);
+        circular_remove_cauda(cauda, lista);
         return;
     }
 
@@ -142,7 +142,7 @@ void remove_id(p_promo **cauda, int id, lista_promo *lista)
     free(remover);                  
 }
 
-void busca_nome(p_promo *cauda, char *nome)
+void circular_busca_nome(p_promo *cauda, char *nome)
 {
     if (cauda == NULL)
     {
@@ -176,7 +176,7 @@ void busca_nome(p_promo *cauda, char *nome)
     }
 }
 
-void atualiza_quantidade(p_promo **cauda, int id, int nova_quantidade)
+void circular_atualiza_quantidade(p_promo **cauda, int id, int nova_quantidade)
 {
     if(*cauda == NULL)
     {
@@ -205,7 +205,7 @@ void atualiza_quantidade(p_promo **cauda, int id, int nova_quantidade)
     }
 }
 
-int conta_lista(p_promo *cauda)
+int circular_conta_lista(p_promo *cauda)
 {
     if(cauda == NULL)
     {
@@ -224,7 +224,7 @@ int conta_lista(p_promo *cauda)
     return qty_produtos;
 }
 
-void exibe_lista(p_promo **cauda)
+void circular_exibe_lista(p_promo **cauda)
 {
     if(*cauda == NULL)
     {
@@ -247,7 +247,7 @@ void exibe_lista(p_promo **cauda)
     } while(atual != (*cauda)->prox);
 }
 
-void limpa_lista(p_promo **cauda, lista_promo *lista)
+void circular_limpa_lista(p_promo **cauda, lista_promo *lista)
 {
     if(*cauda == NULL)
     {
@@ -273,48 +273,4 @@ void limpa_lista(p_promo **cauda, lista_promo *lista)
     {
         lista->cauda = NULL;
     }
-}
-
-int main()
-{
-    p_promo *cauda = NULL;
-
-    lista_promo lista;
-    lista.cauda = cauda;
-    lista.tamanho = 0;
-
-    p_promo p1 = {1, "Arroz", 2, 6, "14/12", NULL};
-    p_promo p2 = {2, "Feijao", 8, 2.50, "01/09", NULL};
-
-    printf("Quantidade de produtos na lista: %d\n", conta_lista(cauda));
-
-    insere_cabeca(&cauda, p1, &lista);
-
-    printf("Quantidade de produtos na lista: %d\n", conta_lista(cauda));
-    
-    insere_cauda(&cauda, p2, &lista);
-
-    printf("Quantidade de produtos na lista: %d\n", conta_lista(cauda));
-
-    //remove_id(&cauda, 1, &lista);
-
-    atualiza_quantidade(&cauda, 1, 23);
-    atualiza_quantidade(&cauda, 2, 12);
-
-    //exibe_lista(cauda);
-
-    //busca_nome(cauda, "Arr");
-    //busca_nome(cauda, "Fei");
-
-    limpa_lista(&cauda, &lista);
-
-    exibe_lista(&cauda);
-
-    insere_cabeca(&cauda, p1, &lista);
-    insere_cabeca(&cauda, p1, &lista);
-    insere_cauda(&cauda, p2, &lista);
-
-    exibe_lista(&cauda);
-
-    return 0;
 }
