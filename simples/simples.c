@@ -4,35 +4,38 @@
 
 #include "simples.h"
 
-lista_pereciveis* criar_lista_pereciveis(){
-    lista_pereciveis* lista_pere = malloc(sizeof(*lista_pere));
-    lista_pere->cabeca = NULL;
-    lista_pere->tamanho = 0;
+ERROR_TYPE_T criar_lista_pereciveis(lista_pereciveis **lista_pere){
+    *lista_pere = malloc(sizeof(**lista_pere));
+    if(lista_pere == NULL)
+    {
+        return ALLOCATION_ERROR;
+    }
 
-    return lista_pere;
+    (*lista_pere)->cabeca = NULL;
+    (*lista_pere)->tamanho = 0;
+
+    return SUCCESS;
 }
 
-p_perecivel* criar_p_perecivel(p_perecivel novo){
+ERROR_TYPE_T adicionar_perecivel(p_perecivel novo, lista_pereciveis* *lista){
     p_perecivel* novo_produto = malloc(sizeof(*novo_produto));
-
+    if(novo_produto == NULL)
+    {
+        return ALLOCATION_ERROR;
+    }
+    
     novo_produto->id = novo.id;
     strcpy(novo_produto->nome, novo.nome);
     novo_produto->preco = novo.preco;
     novo_produto->quantidade = novo.quantidade;
     strcpy(novo_produto->validade, novo.validade);
     novo_produto->prox = novo.prox;
-
-    return novo_produto;
-}
-
-void adicionar_perecivel(p_perecivel novo, lista_pereciveis* *lista){
-    p_perecivel* produto = criar_p_perecivel(novo);
     
     if((*lista)->tamanho == 0){
-        (*lista)->cabeca = produto;
+        (*lista)->cabeca = novo_produto;
         (*lista)->tamanho = 1;
 
-        return;
+        return SUCCESS;
     }
 
     p_perecivel* atual = (*lista)->cabeca;
@@ -41,15 +44,15 @@ void adicionar_perecivel(p_perecivel novo, lista_pereciveis* *lista){
         atual = atual->prox;
     }
 
-    atual->prox = produto;
+    atual->prox = novo_produto;
     (*lista)->tamanho++;
 
-    return;
+    return SUCCESS;
 }
 
-void exibir_pereciveis(p_perecivel* atual){
+ERROR_TYPE_T exibir_pereciveis(p_perecivel* atual){
     if(atual == NULL){
-        return;
+        return SUCCESS;
     }
 
     printf("\nNome: %s\n", atual->nome);
@@ -59,9 +62,11 @@ void exibir_pereciveis(p_perecivel* atual){
     printf("Validade: %s\n", atual->validade);
 
     exibir_pereciveis(atual->prox);
+
+    return SUCCESS;
 }
 
-void remover_perecivel(lista_pereciveis* *lista, int id){
+ERROR_TYPE_T remover_perecivel(lista_pereciveis* *lista, int id){
     p_perecivel* atual = (*lista)->cabeca;
     p_perecivel* anterior = NULL;
 
@@ -75,7 +80,7 @@ void remover_perecivel(lista_pereciveis* *lista, int id){
     if(atual == NULL)
     {
         printf("Produto não encontrado!\n");
-        return;
+        return ID_NOTFOUND;
     }
 
     if(anterior == NULL){
@@ -88,10 +93,10 @@ void remover_perecivel(lista_pereciveis* *lista, int id){
     (*lista)->tamanho--;
     printf("Produto removido com sucesso!\n");
 
-    return;
+    return SUCCESS;
 }
 
-void esvaziar_pereciveis(lista_pereciveis* *lista){
+ERROR_TYPE_T esvaziar_pereciveis(lista_pereciveis* *lista){
     p_perecivel* atual = (*lista)->cabeca;
     
     while(atual != NULL)
@@ -105,15 +110,15 @@ void esvaziar_pereciveis(lista_pereciveis* *lista){
     (*lista)->tamanho = 0;
 
     printf("Lista esvaziada!\n");
-    return;
+    return SUCCESS;
 }
 
-void editar_qtd_perecivel(lista_pereciveis* *lista, int id){
+ERROR_TYPE_T editar_qtd_perecivel(lista_pereciveis* *lista, int id){
     p_perecivel* atual = (*lista)->cabeca;
 
     if(atual == NULL){
         printf("Lista vazia.");
-        return;
+        return SIZE_ERROR;
     }
 
     while(atual != NULL && atual->id != id)
@@ -124,7 +129,7 @@ void editar_qtd_perecivel(lista_pereciveis* *lista, int id){
     if(atual == NULL)
     {
         printf("Produto não encontrado!\n");
-        return;
+        return ID_NOTFOUND;
     }
 
     printf("\n-- EDITAR PRODUTO %d\n", id);
@@ -133,10 +138,10 @@ void editar_qtd_perecivel(lista_pereciveis* *lista, int id){
     scanf("%d", &atual->quantidade);
 
     printf("\nProduto editado com sucesso!\n");
-    return;
+    return SUCCESS;
 }
 
-void buscar_perecivel(lista_pereciveis* lista, char *substr){
+ERROR_TYPE_T buscar_perecivel(lista_pereciveis* lista, char *substr){
     p_perecivel* atual = lista->cabeca;
     int count = 0;
 
@@ -157,8 +162,8 @@ void buscar_perecivel(lista_pereciveis* lista, char *substr){
 
     if(count == 0){
         printf("Produto não encontrado.\n");
-        return;
+        return ID_NOTFOUND;
     }
 
-    return;
+    return SUCCESS;
 }
