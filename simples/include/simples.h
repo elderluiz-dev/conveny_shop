@@ -1,4 +1,4 @@
-#include "produto.h"
+#pragma once
 
 typedef struct perecivel
 {
@@ -15,6 +15,8 @@ typedef struct lista_pereciveis
     p_perecivel *cabeca;
     int tamanho;
 } lista_pereciveis;
+
+#include "produto.h"
 
 ERROR_TYPE_T criar_lista_pereciveis(lista_pereciveis **lista);
 
