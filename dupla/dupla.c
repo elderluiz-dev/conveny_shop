@@ -5,12 +5,11 @@
 #include "dupla.h"
 #include "produto.h"
 
-ERROR_TYPE_T iniciar_lista_nperecivel(lista_nao_pereciveis** lista)
+ERROR_TYPE_T iniciar_list_dupla(lista_nao_pereciveis **lista)
 {
     *lista = (lista_nao_pereciveis*) malloc(sizeof(**lista));
     if (*lista == NULL)
     {
-        printf("Não foi possível iniciar a lista: Erro na alocação de memória.\n");
         return ALLOCATION_ERROR;
     }
 
@@ -20,9 +19,37 @@ ERROR_TYPE_T iniciar_lista_nperecivel(lista_nao_pereciveis** lista)
     return SUCCESS;
 }
 
-ERROR_TYPE_T inserir(p_nao_perecivel novo_prod, p_nao_perecivel** prod)
+ERROR_TYPE_T inserir_inicio_dupla(p_nao_perecivel novo_prod, p_nao_perecivel **cabeça)
 {
-    p_nao_perecivel* nó = (p_nao_perecivel*) malloc(sizeof(*nó));
+    p_nao_perecivel *nó = (p_nao_perecivel*) malloc(sizeof(*nó));
+    
+    if(nó == NULL)
+    {
+        return ALLOCATION_ERROR;
+    }
+
+    *nó = novo_prod;
+
+    if(*cabeça == NULL)
+    {
+        *cabeça = nó;
+        nó->prox = NULL;
+        nó->ante = NULL;
+    }
+    else
+    {
+        (*cabeça)->ante = nó;
+        nó->prox = *cabeça;
+        nó->ante = NULL;
+        *cabeça = nó;
+    }
+
+    return SUCCESS;
+}
+
+ERROR_TYPE_T inserir_fim_dupla(p_nao_perecivel novo_prod, p_nao_perecivel **cabeça)
+{
+    p_nao_perecivel *nó = (p_nao_perecivel*) malloc(sizeof(*nó));
     
     if(nó == NULL)
     {
@@ -31,68 +58,106 @@ ERROR_TYPE_T inserir(p_nao_perecivel novo_prod, p_nao_perecivel** prod)
     }
 
     *nó = novo_prod;
-
-    if(*prod == NULL)
+    
+    p_nao_perecivel *aux = *cabeça;
+    while(aux->prox != NULL)
     {
-        *prod = nó;
-        (*prod)->ante = NULL;
-        (*prod)->prox = NULL;
+        aux = aux->prox;
     }
-    else
-    {
-        p_nao_perecivel* aux = *prod;
-        while(aux->prox != NULL)
-        {
-            aux = aux->prox;
-        }
 
-        aux->prox = nó;
-        nó->ante = aux;
-        nó->prox = NULL;
-    }
+    aux->prox = nó;
+    nó->ante = aux;
+    nó->prox = NULL;
+    
 
     return SUCCESS;
 }
 
-ERROR_TYPE_T remover(lista_nao_pereciveis* lista, int id)
+ERROR_TYPE_T remover_inicio_dupla(lista_nao_pereciveis *lista)
 {
-    p_nao_perecivel* prod = lista->cabeca;
-    p_nao_perecivel* aux = NULL;
+    if(lista->tamanho == 0 || lista->cabeca == NULL)
+    {
+        return SIZE_ERROR;
+    }
+
+    p_nao_perecivel *cabeça = lista->cabeca;
+   
+    if(cabeça->prox == NULL)
+    {
+        free(cabeça);
+        lista->cabeca = NULL;
+    }
+    else
+    {
+        lista->cabeca = cabeça->prox;
+        (cabeça->prox)->ante = NULL;
+        free(cabeça);
+    }
+
+    lista->tamanho--;
+    return SUCCESS;
+}
+
+ERROR_TYPE_T remover_fim_dupla(lista_nao_pereciveis *lista)
+{
+    if(lista->tamanho == 0 || lista->cabeca == NULL)
+    {
+        return SIZE_ERROR;
+    }
+
+    p_nao_perecivel *prod = lista->cabeca;
+
+    while(prod->prox != NULL)
+    {
+        prod = prod->prox;
+    }
+
+    (prod->ante)->prox = NULL;
+    free(prod);
+    lista->tamanho--;
+    return SUCCESS;
+}
+
+ERROR_TYPE_T remover_id_dupla(lista_nao_pereciveis *lista, int id)
+{
+    if(lista->tamanho == 0 || lista->cabeca == NULL)
+    {
+        return SIZE_ERROR;
+    }
+
+    p_nao_perecivel *prod = lista->cabeca;
+    p_nao_perecivel *aux = NULL;
 
     while(prod->prox != NULL && prod->id != id)
     {
         aux = prod;
         prod = prod->prox;
     }
-
     if(prod->id != id)
     {
-        printf("\nId não existente.\n");
         return ID_NOTFOUND;
     }
 
-    if (aux == NULL && prod->prox == NULL)
+    if (aux == NULL)
     {
-        free(prod);
-        lista->cabeca = NULL;
-        lista->tamanho--;
+        remover_inicio_dupla(lista);
         return SUCCESS;
-    }   else
+    }   
+    else
+    {
+        aux->prox = prod->prox;
+        if(prod->prox != NULL)
         {
-            aux->prox = prod->prox;
-            if(prod->prox != NULL)
-            {
-                (prod->prox)->ante = aux;
-            }
-            free(prod);
-        } 
-
+            (prod->prox)->ante = aux;
+        }
+        free(prod);
+    } 
 
     lista->tamanho--;
     return SUCCESS;
 }
 
-ERROR_TYPE_T buscar(p_nao_perecivel* prod, char* prod_busca)
+ERROR_TYPE_T buscar_dupla(p_nao_perecivel *prod, char *prod_busca)
 {
     while(prod->prox != NULL)
     {
@@ -118,7 +183,7 @@ ERROR_TYPE_T buscar(p_nao_perecivel* prod, char* prod_busca)
     return SUCCESS;
 }
 
-ERROR_TYPE_T atualizar_quant(p_nao_perecivel* prod, int id_prod)
+ERROR_TYPE_T atualizar_dupla(p_nao_perecivel *prod, int id_prod)
 {
     while(prod->prox != NULL && prod->id != id_prod)
     {
@@ -150,7 +215,7 @@ ERROR_TYPE_T atualizar_quant(p_nao_perecivel* prod, int id_prod)
     return SUCCESS;
 }
 
-ERROR_TYPE_T exibir(p_nao_perecivel* prod)
+ERROR_TYPE_T exibir_dupla(p_nao_perecivel *prod)
 {
     printf("\nListagem de produtos\n");
     printf ("Id: %d\n", prod->id);
@@ -164,60 +229,41 @@ ERROR_TYPE_T exibir(p_nao_perecivel* prod)
         return SUCCESS;
     }
 
-    return exibir(prod = prod->prox);
+    return exibir_dupla(prod = prod->prox);
 }
 
-ERROR_TYPE_T exi_remover(p_nao_perecivel* prod)
+ERROR_TYPE_T exi_inver_dupla(p_nao_perecivel *prod, int temp)
 {
-    if(prod->ante == NULL)
+    if(temp == 1)
     {
-        printf("\nProdutos atuais:\n");
-    }
-    printf ("Id: %d\n", prod->id);
-    printf("Nome: %s\n\n", prod->nome);
+        while(prod->prox != NULL)
+        {
+            prod = prod->prox;
 
-    if(prod->prox == NULL)
-    {
-        return SUCCESS;
-    }
+        }
 
-    return exi_remover(prod = prod->prox);
-}
-
-ERROR_TYPE_T exi_inverso(p_nao_perecivel* prod)
-{
-    p_nao_perecivel* aux;
-    while(prod->prox != NULL)
-    {
-        prod = prod->prox;
-        aux = prod;
-    }
-    
-    if(aux->prox == NULL)
-    {
+        temp++;
         printf("\nListagem inversa\n");
     }
-
+    
     printf ("Id: %d\n", prod->id);
     printf("Nome: %s\n", prod->nome);
     printf("Preço: %.2f\n", prod->preco);
     printf("Quantidade: %d\n", prod->quantidade);
     printf("Validade: %s\n\n", prod->validade);
 
-    if(aux->ante == NULL)
+    if(prod->ante == NULL)
     {
         return SUCCESS;
     }
-
-    aux = aux->ante;
     
-    return exi_inverso(prod);
+    return exi_inver_dupla(prod->ante, temp);
 }
 
-ERROR_TYPE_T limpar_list(lista_nao_pereciveis** lista)
+ERROR_TYPE_T limpar_dupla(lista_nao_pereciveis **lista)
 {
-    p_nao_perecivel* prod = (*lista)->cabeca;
-    p_nao_perecivel* aux;
+    p_nao_perecivel *prod = (*lista)->cabeca;
+    p_nao_perecivel *aux;
 
     while(prod->prox != NULL)
     {

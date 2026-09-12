@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "produto.h"
 #include "simples.h"
 
 ERROR_TYPE_T criar_lista_pereciveis(lista_pereciveis **lista_pere){
