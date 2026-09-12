@@ -544,12 +544,20 @@ int main(){
                                     case 3:
                                     {
                                         limpa_terminal();
-                                        int id_produto;
+                                        int id_produto = 0;
+
+                                        if(cauda_promo == NULL)
+                                        {
+                                            printf("Não foi possível realizar a remoção pois a lista está vazia\n");
+                                            break;
+                                        }
                                         
                                         printf("Digite o ID do produto a ser removido: ");
                                         scanf("%d", &id_produto);
-
+                                        
                                         circular_remove_id(&cauda_promo, id_produto, lista_promocao);
+                                        
+
                                         break;
                                     }
                                     

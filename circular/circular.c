@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "circular.h"
+#include "produto.h"
 
 void circular_insere_cabeca(p_promo **cauda, p_promo novo_produto, lista_promo *lista)
 {
@@ -130,21 +131,15 @@ void circular_remove_cauda(p_promo **cauda, lista_promo *lista)
 
 void circular_remove_id(p_promo **cauda, int id, lista_promo *lista)
 {
-    if (*cauda == NULL) {
-        printf("Não foi possível realizar a remoção pois a lista está vazia\n");
-        return;
-    }
-
     p_promo *atual = *cauda;
     int encontrou = 0;
 
-    // Busca o nó ANTERIOR ao que possui o ID procurado
     do {
         if (atual->prox->id == id) {
             encontrou = 1;
             break;
         }
-        
+
         atual = atual->prox;
     } while (atual != *cauda);
 
@@ -163,7 +158,6 @@ void circular_remove_id(p_promo **cauda, int id, lista_promo *lista)
         return;
     }
 
-    // Remoção do meio da lista
     p_promo *remover = atual->prox;
     atual->prox = remover->prox;
     free(remover);

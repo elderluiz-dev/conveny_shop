@@ -1,5 +1,7 @@
 #pragma once
 
+#include "produto.h"
+
 typedef struct promo
 {
     int id;
