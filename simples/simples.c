@@ -34,12 +34,13 @@ ERROR_TYPE_T adicionar_perecivel_inicio(p_perecivel novo, lista_pereciveis* *lis
 
     if((*lista)->tamanho == 0){
         (*lista)->cabeca = novo_produto;
-        (*lista)->tamanho = 1;
+        (*lista)->tamanho++;
         return SUCCESS;
     }
 
     novo_produto->prox = (*lista)->cabeca;
     (*lista)->cabeca = novo_produto;
+    (*lista)->tamanho++;
 
     return SUCCESS;
 }
@@ -60,7 +61,7 @@ ERROR_TYPE_T adicionar_perecivel_fim(p_perecivel novo, lista_pereciveis* *lista)
 
     if((*lista)->tamanho == 0){
         (*lista)->cabeca = novo_produto;
-        (*lista)->tamanho = 1;
+        (*lista)->tamanho++;
         return SUCCESS;
     }
 
@@ -83,7 +84,7 @@ ERROR_TYPE_T exibir_pereciveis(p_perecivel* atual){
 
     printf("\nNome: %s\n", atual->nome);
     printf("ID: %d\n", atual->id);
-    printf("Preço: %.2f\n", atual->preco);
+    printf("Preço: R$ %.2f\n", atual->preco);
     printf("Quantidade: %d\n", atual->quantidade);
     printf("Validade: %s\n", atual->validade);
 
@@ -106,12 +107,21 @@ ERROR_TYPE_T remover_perecivel_inicio(lista_pereciveis* *lista){
 ERROR_TYPE_T remover_perecivel_final(lista_pereciveis* *lista){
     p_perecivel* atual = (*lista)->cabeca;
 
-    while(atual != NULL)
+    if((*lista)->tamanho == 1){
+        free(atual);
+        (*lista)->cabeca = NULL;
+        (*lista)->tamanho--;
+        printf("Produto removido com sucesso!\n");
+        return SUCCESS;
+    }
+
+    while(atual->prox->prox != NULL)
     {
         atual = atual->prox;
     }
 
-    free(atual);
+    free(atual->prox);
+    atual->prox = NULL;
     (*lista)->tamanho--;
     printf("Produto removido com sucesso!\n");
 
@@ -168,11 +178,6 @@ ERROR_TYPE_T esvaziar_pereciveis(lista_pereciveis* *lista){
 ERROR_TYPE_T editar_qtd_perecivel(lista_pereciveis* *lista, int id){
     p_perecivel* atual = (*lista)->cabeca;
 
-    if(atual == NULL){
-        printf("Lista vazia.");
-        return SIZE_ERROR;
-    }
-
     while(atual != NULL && atual->id != id)
     {
         atual = atual->prox;
@@ -203,7 +208,7 @@ ERROR_TYPE_T buscar_perecivel(lista_pereciveis* lista, char *substr){
         {
             printf("\nProduto: %s\n", atual->nome);
             printf("ID: %d\n", atual->id);
-            printf("Preço: %.2f\n", atual->preco);
+            printf("Preço: R$ %.2f\n", atual->preco);
             printf("Quantidade: %d\n", atual->quantidade);
             printf("Validade: %s\n", atual->validade);
             count++;

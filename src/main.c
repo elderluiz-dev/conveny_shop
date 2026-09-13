@@ -127,7 +127,7 @@ int main(){
                             break;
 
                         case 2:
-                            remover_perecivel_inicio(&lista_pere);
+                            remover_perecivel_final(&lista_pere);
                             break;
 
                         case 3:
@@ -144,6 +144,7 @@ int main(){
                             break;
 
                         default:
+                            limpa_terminal();
                             printf("Opção inválida\n");
                             break;
                         }
@@ -154,7 +155,7 @@ int main(){
                         limpa_terminal();
                         
                         if(lista_pere->tamanho == 0){
-                            printf("lista_pere vazia!");
+                            printf("Lista vazia\n");
                             break;
                         }
 
@@ -172,7 +173,7 @@ int main(){
                         limpa_terminal();
                         if(lista_pere->tamanho == 0)
                         {
-                            printf("Lista vazia");
+                            printf("Lista vazia\n");
                             break;
                         }
 
@@ -182,8 +183,14 @@ int main(){
                         break;
 
                     case 5:
-                        int id;
                         limpa_terminal();
+                        if(lista_pere->tamanho == 0)
+                        {
+                            printf("Lista vazia\n");
+                            break;
+                        }
+
+                        int id;
 
                         printf("Digite o ID do produto a ser editado: ");
                         scanf("%d", &id);
@@ -199,6 +206,12 @@ int main(){
 
                     case 7:
                         limpa_terminal();
+                        if(lista_pere->tamanho == 0)
+                        {
+                            printf("Lista vazia\n");
+                            break;
+                        }
+
                         char verify[20];
                         
                         printf("Tem certeza que deseja esvaziar a lista? Esta ação é irreversível!\n");
@@ -206,6 +219,8 @@ int main(){
                         
                         fgets(verify, sizeof(verify), stdin);
                         verify[strcspn(verify, "\n")] = '\0';
+
+                        limpa_terminal();
 
                         if(strcmp(verify, "CONFIRMO") == 0 || strcmp(verify, "confirmo") == 0){
                             esvaziar_pereciveis(&lista_pere);
