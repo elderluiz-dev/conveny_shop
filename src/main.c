@@ -574,11 +574,12 @@ int main(){
                         {
                             limpa_terminal();
 
-                            if(list_nao_pereci == NULL)
-                            {
-                                printf("\nVocê não possui uma lista!\n");
-                            }
                             err = limpar_dupla(&list_nao_pereci);
+                            if(err == SIZE_ERROR)
+                            {
+                                printf("Voce ainda não possui uma lista!\n");
+                                break;
+                            }
 
                             break;
                         }

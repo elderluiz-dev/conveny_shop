@@ -274,6 +274,13 @@ ERROR_TYPE_T limpar_dupla(lista_nao_pereciveis **lista)
     {
         return SIZE_ERROR;
     }
+    if((*lista)->cabeca == NULL)
+    {
+        free(*lista);
+        *lista = NULL;
+        printf("Lista liberada!\n");
+        return SUCCESS;
+    }
     p_nao_perecivel *prod = (*lista)->cabeca;
     p_nao_perecivel *aux = NULL;
 
@@ -290,7 +297,6 @@ ERROR_TYPE_T limpar_dupla(lista_nao_pereciveis **lista)
         *lista = NULL;
         return SUCCESS;
     }
-    
     else
     {
         while(aux != NULL)
