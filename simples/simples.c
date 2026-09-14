@@ -7,7 +7,7 @@
 
 ERROR_TYPE_T criar_lista_pereciveis(lista_pereciveis **lista_pere){
     *lista_pere = malloc(sizeof(**lista_pere));
-    if(lista_pere == NULL)
+    if(*lista_pere == NULL)
     {
         return ALLOCATION_ERROR;
     }
@@ -171,7 +171,6 @@ ERROR_TYPE_T esvaziar_pereciveis(lista_pereciveis* *lista){
     (*lista)->cabeca = NULL;
     (*lista)->tamanho = 0;
 
-    printf("Lista esvaziada!\n");
     return SUCCESS;
 }
 
