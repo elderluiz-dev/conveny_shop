@@ -75,7 +75,7 @@ ERROR_TYPE_T inserir_fim_dupla(p_nao_perecivel novo_prod, p_nao_perecivel **cabe
 
 ERROR_TYPE_T remover_inicio_dupla(lista_nao_pereciveis *lista)
 {
-    if(lista->tamanho == 0 || lista->cabeca == NULL)
+    if(lista == NULL || lista->cabeca == NULL)
     {
         return SIZE_ERROR;
     }
@@ -100,7 +100,7 @@ ERROR_TYPE_T remover_inicio_dupla(lista_nao_pereciveis *lista)
 
 ERROR_TYPE_T remover_fim_dupla(lista_nao_pereciveis *lista)
 {
-    if(lista->tamanho == 0 || lista->cabeca == NULL)
+    if(lista == NULL || lista->cabeca == NULL)
     {
         return SIZE_ERROR;
     }
@@ -120,7 +120,7 @@ ERROR_TYPE_T remover_fim_dupla(lista_nao_pereciveis *lista)
 
 ERROR_TYPE_T remover_id_dupla(lista_nao_pereciveis *lista, int id)
 {
-    if(lista->tamanho == 0 || lista->cabeca == NULL)
+    if(lista == NULL || lista->cabeca == NULL)
     {
         return SIZE_ERROR;
     }
@@ -262,6 +262,10 @@ ERROR_TYPE_T exi_inver_dupla(p_nao_perecivel *prod, int temp)
 
 ERROR_TYPE_T limpar_dupla(lista_nao_pereciveis **lista)
 {
+    if(*lista == NULL)
+    {
+        return SIZE_ERROR;
+    }
     p_nao_perecivel *prod = (*lista)->cabeca;
     p_nao_perecivel *aux = NULL;
 
@@ -276,7 +280,6 @@ ERROR_TYPE_T limpar_dupla(lista_nao_pereciveis **lista)
         free(prod);
         free(*lista);
         *lista = NULL;
-        printf("\nA lista foi limpada com sucesso!\n");
         return SUCCESS;
     }
     
@@ -290,7 +293,6 @@ ERROR_TYPE_T limpar_dupla(lista_nao_pereciveis **lista)
         }
         free(*lista);
         *lista = NULL;
-        printf("\nA lista foi limpada com sucesso!\n");
         return SUCCESS;
     }
 
