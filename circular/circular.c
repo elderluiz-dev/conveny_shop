@@ -9,7 +9,11 @@ void circular_insere_cabeca(p_promo **cauda, p_promo novo_produto, lista_promo *
 {
     p_promo *produto = (p_promo *)malloc(sizeof(p_promo));
 
-    if(produto == NULL) return;
+    if(produto == NULL)
+    {
+        printf("Não foi possível inserir o novo produto, erro de alocação.");
+        return;
+    }
 
     produto->id = novo_produto.id;
     strcpy(produto->nome, novo_produto.nome);
@@ -20,7 +24,6 @@ void circular_insere_cabeca(p_promo **cauda, p_promo novo_produto, lista_promo *
 
     if(*cauda == NULL)
     {
-        // O produto conecta a si mesmo
         produto->prox = produto;
         lista->cauda = produto;
         *cauda = produto;
@@ -40,8 +43,12 @@ void circular_insere_cauda(p_promo **cauda, p_promo novo_produto, lista_promo *l
 {
     p_promo *produto = (p_promo *)malloc(sizeof(p_promo));
 
-    if(produto == NULL) return;
-    
+    if(produto == NULL)
+    {
+        printf("Não foi possível inserir o novo produto, erro de alocação.");
+        return;
+    }
+
     produto->id = novo_produto.id;
     strcpy(produto->nome, novo_produto.nome);
     produto->preco = novo_produto.preco;
@@ -51,7 +58,6 @@ void circular_insere_cauda(p_promo **cauda, p_promo novo_produto, lista_promo *l
 
     if(*cauda == NULL)
     {
-        // O produto conecta a si mesmo
         produto->prox = produto;
         lista->cauda = produto;
         *cauda = produto;
@@ -59,8 +65,6 @@ void circular_insere_cauda(p_promo **cauda, p_promo novo_produto, lista_promo *l
     }
     else
     {
-        // O ultimo produto adicionado se conecta com o primeiro da lista(cauda->proximo)
-        // E o anterior a esse novo se conecta ao novo nó
         produto->prox = (*cauda)->prox;
         (*cauda)->prox = produto;
 

@@ -144,7 +144,7 @@ int main(){
                             break;
 
                         default:
-                            printf("Opção inválida\n");
+                            printf("Opção inválida\n");//
                             break;
                         }
 
@@ -154,7 +154,7 @@ int main(){
                         limpa_terminal();
                         
                         if(lista_pere->tamanho == 0){
-                            printf("lista_pere vazia!");
+                            printf("Não foi possível buscar o produto, pois a lista está vazia.\n");
                             break;
                         }
 
@@ -523,7 +523,7 @@ int main(){
                             }
                             if(list_nao_pereci->tamanho == 0)
                             {
-                                printf("\nA lista esta vazia.\n");
+                                printf("\nA lista está vazia.\n");
                                 break;
                             }
 
