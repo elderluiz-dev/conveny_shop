@@ -560,6 +560,11 @@ int main(){
                         case 7:
                         {
                             limpa_terminal();
+                            if(list_nao_pereci == NULL)
+                            {
+                                printf("Quantidade de produtos não perecíveis: 0\n");
+                                break;
+                            }
                             printf("Quantidade de produtos não perecíveis: %d\n", list_nao_pereci->tamanho);
 
                             break;

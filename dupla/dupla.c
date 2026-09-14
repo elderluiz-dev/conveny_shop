@@ -112,6 +112,14 @@ ERROR_TYPE_T remover_fim_dupla(lista_nao_pereciveis *lista)
         prod = prod->prox;
     }
 
+    if(prod->ante == NULL)
+    {
+        free(prod);
+        lista->cabeca = NULL;
+        lista->tamanho--;
+        return SUCCESS;
+    }
+
     (prod->ante)->prox = NULL;
     free(prod);
     lista->tamanho--;
