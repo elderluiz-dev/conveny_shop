@@ -263,7 +263,7 @@ ERROR_TYPE_T exi_inver_dupla(p_nao_perecivel *prod, int temp)
 ERROR_TYPE_T limpar_dupla(lista_nao_pereciveis **lista)
 {
     p_nao_perecivel *prod = (*lista)->cabeca;
-    p_nao_perecivel *aux;
+    p_nao_perecivel *aux = NULL;
 
     while(prod->prox != NULL)
     {
@@ -271,7 +271,7 @@ ERROR_TYPE_T limpar_dupla(lista_nao_pereciveis **lista)
         aux = prod->ante;
     }
 
-    if(aux != NULL)
+    if(aux == NULL)
     {
         free(prod);
         free(*lista);
@@ -279,6 +279,7 @@ ERROR_TYPE_T limpar_dupla(lista_nao_pereciveis **lista)
         printf("\nA lista foi limpada com sucesso!\n");
         return SUCCESS;
     }
+    
     else
     {
         while(aux != NULL)

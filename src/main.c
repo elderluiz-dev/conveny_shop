@@ -224,6 +224,7 @@ int main(){
 
                         if(strcmp(verify, "CONFIRMO") == 0 || strcmp(verify, "confirmo") == 0){
                             esvaziar_pereciveis(&lista_pere);
+                            printf("Lista esvaziada!\n");
                         }else{
                             printf("Operação cancelada pelo usuário.");
                         }
@@ -842,6 +843,15 @@ int main(){
             {
                 limpa_terminal();
                 printf("O programa foi encerrado pelo usuário.\n");
+
+                esvaziar_pereciveis(&lista_pere);
+                if(list_nao_pereci != NULL){
+                    limpar_dupla(&list_nao_pereci);
+                }
+                circular_limpa_lista(&cauda_promo, lista_promocao);
+
+                free(lista_pere);
+                free(lista_promocao);
                 return 0;
             }
 
