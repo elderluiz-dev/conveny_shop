@@ -305,6 +305,7 @@ ERROR_TYPE_T limpar_dupla(lista_nao_pereciveis **lista)
             prod = aux;
             aux = aux->ante;
         }
+        free(prod);
         free(*lista);
         *lista = NULL;
         return SUCCESS;
