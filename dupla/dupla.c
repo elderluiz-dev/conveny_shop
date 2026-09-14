@@ -170,7 +170,7 @@ ERROR_TYPE_T buscar_dupla(lista_nao_pereciveis *lista, char *prod_busca)
     p_nao_perecivel *prod = lista->cabeca;
     while(prod != NULL)
     {
-        if(strpbrk(prod->nome, prod_busca) != NULL)
+        if(strstr(prod->nome, prod_busca) != NULL)
         {
             printf ("Id: %d\n", prod->id);
             printf("Nome: %s\n", prod->nome);

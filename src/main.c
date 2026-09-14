@@ -281,7 +281,7 @@ int main(){
                             scanf("%d", &nov_item.quantidade);
                             while(nov_item.quantidade <= 0)
                             {
-                                printf("Preco invalido!\n");
+                                printf("Quantidade inválida!\n");
                                 printf("Digite novamente: ");
                                 scanf("%d", &nov_item.quantidade);
                             }
@@ -290,7 +290,7 @@ int main(){
                             scanf("%f", &nov_item.preco);
                             while(nov_item.preco <= 0)
                             {
-                                printf("Preco invalido!\n");
+                                printf("Preço inválido!\n");
                                 printf("Digite novamente: ");
                                 scanf("%f", &nov_item.preco);
                             }    
