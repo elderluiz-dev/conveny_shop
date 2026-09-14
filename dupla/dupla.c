@@ -165,9 +165,10 @@ ERROR_TYPE_T remover_id_dupla(lista_nao_pereciveis *lista, int id)
     return SUCCESS;
 }
 
-ERROR_TYPE_T buscar_dupla(p_nao_perecivel *prod, char *prod_busca)
+ERROR_TYPE_T buscar_dupla(lista_nao_pereciveis *lista, char *prod_busca)
 {
-    while(prod->prox != NULL)
+    p_nao_perecivel *prod = lista->cabeca;
+    while(prod != NULL)
     {
         if(strpbrk(prod->nome, prod_busca) != NULL)
         {
@@ -177,22 +178,16 @@ ERROR_TYPE_T buscar_dupla(p_nao_perecivel *prod, char *prod_busca)
             printf("Quantidade: %d\n", prod->quantidade);
             printf("Validade: %s\n\n", prod->validade);
         }
+
         prod = prod->prox;
-    }
-    if(prod->prox == NULL && strpbrk(prod->nome, prod_busca) != NULL)
-    {
-        printf ("Id: %d\n", prod->id);
-        printf("Nome: %s\n", prod->nome);
-        printf("Preço: %.2f\n", prod->preco);
-        printf("Quantidade: %d\n", prod->quantidade);
-        printf("Validade: %s\n\n", prod->validade);
     }
 
     return SUCCESS;
 }
 
-ERROR_TYPE_T atualizar_dupla(p_nao_perecivel *prod, int id_prod)
+ERROR_TYPE_T atualizar_dupla(lista_nao_pereciveis *lista, int id_prod)
 {
+    p_nao_perecivel *prod = lista->cabeca;
     while(prod->prox != NULL && prod->id != id_prod)
     {
         prod = prod->prox;
@@ -274,41 +269,17 @@ ERROR_TYPE_T limpar_dupla(lista_nao_pereciveis **lista)
     {
         return SIZE_ERROR;
     }
-    if((*lista)->cabeca == NULL)
-    {
-        free(*lista);
-        *lista = NULL;
-        printf("Lista liberada!\n");
-        return SUCCESS;
-    }
+
     p_nao_perecivel *prod = (*lista)->cabeca;
-    p_nao_perecivel *aux = NULL;
-
-    while(prod->prox != NULL)
+    while(prod != NULL)
     {
-        prod = prod->prox;
-        aux = prod->ante;
-    }
-
-    if(aux == NULL)
-    {
+        p_nao_perecivel *aux;
+        aux = prod->prox;
         free(prod);
-        free(*lista);
-        *lista = NULL;
-        return SUCCESS;
-    }
-    else
-    {
-        while(aux != NULL)
-        {
-            free(prod);
-            prod = aux;
-            aux = aux->ante;
-        }
-        free(prod);
-        free(*lista);
-        *lista = NULL;
-        return SUCCESS;
+        prod = aux;
     }
 
+    free(*lista);
+    *lista = NULL;
+    return SUCCESS;
 }

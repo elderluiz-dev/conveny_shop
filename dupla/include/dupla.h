@@ -25,8 +25,8 @@ ERROR_TYPE_T inserir_fim_dupla(p_nao_perecivel novo_prod, p_nao_perecivel **cabe
 ERROR_TYPE_T remover_inicio_dupla(lista_nao_pereciveis *lista);
 ERROR_TYPE_T remover_fim_dupla(lista_nao_pereciveis *lista);
 ERROR_TYPE_T remover_id_dupla(lista_nao_pereciveis *lista, int id);
-ERROR_TYPE_T buscar_dupla(p_nao_perecivel *prod, char *prod_busca);
-ERROR_TYPE_T atualizar_dupla(p_nao_perecivel *prod, int id_prod);
+ERROR_TYPE_T buscar_dupla(lista_nao_pereciveis *lista, char *prod_busca);
+ERROR_TYPE_T atualizar_dupla(lista_nao_pereciveis *lista, int id_prod);
 ERROR_TYPE_T exibir_dupla(p_nao_perecivel *prod);
 ERROR_TYPE_T exi_inver_dupla(p_nao_perecivel *prod, int temp);
 ERROR_TYPE_T limpar_dupla(lista_nao_pereciveis **lista);
