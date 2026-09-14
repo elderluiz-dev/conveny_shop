@@ -271,7 +271,7 @@ int main(){
                             limpa_terminal();
 
                             nov_item.id = id_nao_perecivel;
-                            printf("\nPreencha as informações abaixo: \n");
+                            printf("Preencha as informações abaixo: \n");
                             printf("Nome do item: ");
 
                             fgets(nov_item.nome, sizeof(nov_item.nome), stdin);
@@ -310,7 +310,8 @@ int main(){
                                     break;
                                 }
 
-                                printf("\nProduto adicionado com sucesso\n");
+                                limpa_terminal();
+                                printf("Produto adicionado com sucesso\n");
                                 id_nao_perecivel++;
                                 list_nao_pereci->tamanho++;
                                 break;
@@ -334,7 +335,8 @@ int main(){
                                             break;
                                         }
 
-                                        printf("\nProduto adicionado com sucesso\n");
+                                        limpa_terminal();
+                                        printf("Produto adicionado com sucesso\n");
                                         id_nao_perecivel++;
                                         list_nao_pereci->tamanho++;
 
@@ -349,11 +351,13 @@ int main(){
 
                                         if(err == ALLOCATION_ERROR)
                                         {
-                                            printf("\nNão foi possível adicionar o produto! Erro de alocação de memória.\n");
+                                            limpa_terminal();
+                                            printf("Não foi possível adicionar o produto! Erro de alocação de memória.\n");
                                             break;
                                         }
 
-                                        printf("\nProduto adicionado com sucesso\n");
+                                        limpa_terminal();
+                                        printf("Produto adicionado com sucesso\n");
                                         id_nao_perecivel++;
                                         list_nao_pereci->tamanho++;
                                         
@@ -397,11 +401,11 @@ int main(){
 
                                         if(err == SIZE_ERROR)
                                         {
-                                            printf("A lista está vazia!");
+                                            printf("A lista está vazia!\n");
                                             break;
                                         }
 
-                                        printf("Produto removido!");
+                                        printf("Produto removido!\n");
                                         break;
                                     }
 
@@ -412,12 +416,12 @@ int main(){
 
                                         if(err == SIZE_ERROR)
                                         {
-                                            printf("A lista está vazia!");
+                                            printf("A lista está vazia!\n");
 
                                             break;
                                         }
 
-                                        printf("Produto removido!");
+                                        printf("Produto removido!\n");
 
                                         break;
                                     }
@@ -426,25 +430,27 @@ int main(){
                                     {
                                         limpa_terminal();
 
-                                        printf("Digite o id que deseja remover:");
+                                        printf("Digite o id que deseja remover: ");
                                         scanf("%d", &id_temp);
 
                                         err = remover_id_dupla(list_nao_pereci, id_temp);
 
                                         if(err == SIZE_ERROR)
                                         {
-                                            printf("A lista está vazia!");
+                                            limpa_terminal();
+                                            printf("A lista está vazia!\n");
 
                                             break;
                                         }
                                         if(err == ID_NOTFOUND)
                                         {
-                                            printf("\nId não existente.\n");
+                                            limpa_terminal();
+                                            printf("Id não encontrado.\n");
 
                                             break;
                                         }
 
-                                        printf("Produto removido!");
+                                        printf("Produto removido!\n");
                                         break;
                                     }
 
@@ -473,20 +479,19 @@ int main(){
                         {
                             limpa_terminal();
                             char prod_busca[50];
-                            if(list_nao_pereci == NULL)
+
+                            if(list_nao_pereci == NULL || list_nao_pereci->tamanho == 0)
                             {
-                                printf("\nNão possui produtos.\n");
+                                printf("A lista está vazia.\n");
                                 break;
                             }
-                            if(list_nao_pereci->cabeca == NULL)
-                            {
-                                printf("\nNão possui produtos.\n");
-                                break;
-                            }
-                            printf("\nDigite o nome:\n");
+
+                            printf("Digite o nome: ");
                             fgets(prod_busca, sizeof(prod_busca), stdin);
                             prod_busca[strcspn(prod_busca, "\n")] = '\0';
-                            buscar_dupla(list_nao_pereci->cabeca, prod_busca);
+
+                            err = buscar_dupla(list_nao_pereci, prod_busca);
+
                             break;
                         }
 
@@ -494,16 +499,12 @@ int main(){
                         {
                             limpa_terminal();
 
-                            if(list_nao_pereci == NULL)
+                            if(list_nao_pereci == NULL || list_nao_pereci->tamanho == 0)
                             {
-                                printf("\nA lista está vazia.\n");
+                                printf("A lista está vazia.\n");
                                 break;
                             }
-                            if(list_nao_pereci->tamanho == 0)
-                            {
-                                printf("\nA lista está vazia.\n");
-                                break;
-                            }
+
                             exibir_dupla(list_nao_pereci->cabeca);
 
                             break;
@@ -513,16 +514,12 @@ int main(){
                         {
                             limpa_terminal();
 
-                            if(list_nao_pereci == NULL)
+                            if(list_nao_pereci == NULL || list_nao_pereci->tamanho == 0)
                             {
-                                printf("\nA lista está vazia.\n");
+                                printf("A lista está vazia.\n");
                                 break;
                             }
-                            if(list_nao_pereci->tamanho == 0)
-                            {
-                                printf("\nA lista está vazia.\n");
-                                break;
-                            }
+
                             exi_inver_dupla(list_nao_pereci->cabeca, 1);
 
                             break;
@@ -532,25 +529,21 @@ int main(){
                         {
                             limpa_terminal();
 
-                            if(list_nao_pereci == NULL)
+                            if(list_nao_pereci == NULL || list_nao_pereci->tamanho == 0)
                             {
-                                printf("\nA lista está vazia.\n");
-                                break;
-                            }
-                            if(list_nao_pereci->tamanho == 0)
-                            {
-                                printf("\nA lista esta vazia.\n");
+                                printf("A lista está vazia.\n");
                                 break;
                             }
 
                             printf("Digite o id do produto que deseja editar: ");
                             scanf("%d", &id_temp);
 
-                            err = atualizar_dupla(list_nao_pereci->cabeca, id_temp);
+                            err = atualizar_dupla(list_nao_pereci, id_temp);
 
                             if(err == ID_NOTFOUND)
                             {
-                                printf("\nId não encontrado!\n");
+                                limpa_terminal();
+                                printf("Id não encontrado!\n");
                                 break;
                             }
 
@@ -560,11 +553,12 @@ int main(){
                         case 7:
                         {
                             limpa_terminal();
-                            if(list_nao_pereci == NULL)
+                            if(list_nao_pereci == NULL || list_nao_pereci->tamanho == 0)
                             {
-                                printf("Quantidade de produtos não perecíveis: 0\n");
+                                printf("A lista está vazia.\n");
                                 break;
                             }
+                            
                             printf("Quantidade de produtos não perecíveis: %d\n", list_nao_pereci->tamanho);
 
                             break;
@@ -580,6 +574,7 @@ int main(){
                                 printf("Voce ainda não possui uma lista!\n");
                                 break;
                             }
+                            printf("A lista foi limpa!\n");
 
                             break;
                         }
